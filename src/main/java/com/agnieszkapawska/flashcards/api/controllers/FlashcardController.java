@@ -1,7 +1,7 @@
 package com.agnieszkapawska.flashcards.api.controllers;
 
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardDto;
-import com.agnieszkapawska.flashcards.domain.dtos.FlashcardResponseDto;
+import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveResponseDto;
 import com.agnieszkapawska.flashcards.domain.facades.FlashcardFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ public class FlashcardController {
     private FlashcardFacade flashcardFacade;
 
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<FlashcardResponseDto> saveFlashcard(@RequestBody FlashcardDto flashcardDto) {
+    public ResponseEntity<FlashcardSaveResponseDto> saveFlashcard(@RequestBody FlashcardDto flashcardDto) {
         return new ResponseEntity<>(flashcardFacade.saveFlashcard(flashcardDto), HttpStatus.OK);
     }
 

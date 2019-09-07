@@ -14,6 +14,7 @@ public class Flashcard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
+    @Column(unique = true)
     private String question;
     private String answer;
     private String exampleUsage;
