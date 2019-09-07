@@ -1,4 +1,4 @@
-package com.agnieszkapawska.flashcards.models;
+package com.agnieszkapawska.flashcards.domain.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
