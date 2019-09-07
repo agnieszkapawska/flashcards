@@ -1,11 +1,9 @@
-package com.agnieszkapawska.flashcards.models;
+package com.agnieszkapawska.flashcards.domain.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -13,6 +11,7 @@ import java.util.Set;
 @Entity
 @Table(name="Flashcard")
 public class Flashcard {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
     private String question;
