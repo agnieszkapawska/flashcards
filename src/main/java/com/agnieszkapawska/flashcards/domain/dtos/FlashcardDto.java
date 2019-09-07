@@ -14,5 +14,5 @@ public class FlashcardDto {
     private String answer;
     private String exampleUsage;
     private String explanation;
-    private Set<QuestionTags> questionTagsList;
+    private Set<QuestionTags> tagsList;
 }
