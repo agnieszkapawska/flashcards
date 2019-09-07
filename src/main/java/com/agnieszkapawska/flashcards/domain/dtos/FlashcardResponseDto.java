@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FlashcardResponseDto {
+public class FlashcardSaveResponseDto {
     private Long id;
 }
