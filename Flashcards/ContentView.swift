@@ -1,16 +1,35 @@
-//
-//  ContentView.swift
-//  Flashcards
-//
-//  Created by Krzysztof Pawski on 03/09/2019.
-//  Copyright © 2019 Krzysztof Pawski. All rights reserved.
-//
-
 import SwiftUI
 
+struct Entry {
+    let word: String
+    let translation: String
+    let sentence: String
+    let definition: String
+}
+
 struct ContentView: View {
+    @State private var word: String = ""
+    @State private var translation: String = ""
+    @State private var sentence: String = ""
+    
     var body: some View {
-        Text("Hello World")
+        NavigationView {
+            Form {
+                Section {
+                    TextField("Question", text: $word)
+                    TextField("Answer", text: $translation)
+                    TextField("Example usage", text: $sentence)
+                }
+                
+                Section { 
+                    Button(action: {
+                        print(self.word)
+                    }) {
+                        Text("Add")
+                    }
+                }
+            }.navigationBarTitle("Flashcards")
+        }
     }
 }
 

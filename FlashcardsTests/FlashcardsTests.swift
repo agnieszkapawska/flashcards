@@ -1,11 +1,3 @@
-//
-//  FlashcardsTests.swift
-//  FlashcardsTests
-//
-//  Created by Krzysztof Pawski on 03/09/2019.
-//  Copyright © 2019 Krzysztof Pawski. All rights reserved.
-//
-
 import XCTest
 @testable import Flashcards
 
