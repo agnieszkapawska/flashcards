@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F9C61ED2323E84600B88D79 /* AddFlashcardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9C61EC2323E84600B88D79 /* AddFlashcardViewModel.swift */; };
 		3FD0AC71231EE3F60081549B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD0AC70231EE3F60081549B /* AppDelegate.swift */; };
 		3FD0AC73231EE3F60081549B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD0AC72231EE3F60081549B /* SceneDelegate.swift */; };
 		3FD0AC75231EE3F60081549B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD0AC74231EE3F60081549B /* ContentView.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F9C61EC2323E84600B88D79 /* AddFlashcardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFlashcardViewModel.swift; sourceTree = "<group>"; };
 		3FD0AC6D231EE3F60081549B /* Flashcards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flashcards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD0AC70231EE3F60081549B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FD0AC72231EE3F60081549B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				3FD0AC70231EE3F60081549B /* AppDelegate.swift */,
 				3FD0AC72231EE3F60081549B /* SceneDelegate.swift */,
 				3FD0AC74231EE3F60081549B /* ContentView.swift */,
+				3F9C61EC2323E84600B88D79 /* AddFlashcardViewModel.swift */,
 				3FD0AC76231EE3F80081549B /* Assets.xcassets */,
 				3FD0AC7B231EE3F80081549B /* LaunchScreen.storyboard */,
 				3FD0AC7E231EE3F80081549B /* Info.plist */,
@@ -270,6 +273,7 @@
 				3FD0AC71231EE3F60081549B /* AppDelegate.swift in Sources */,
 				3FD0AC73231EE3F60081549B /* SceneDelegate.swift in Sources */,
 				3FD0AC75231EE3F60081549B /* ContentView.swift in Sources */,
+				3F9C61ED2323E84600B88D79 /* AddFlashcardViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

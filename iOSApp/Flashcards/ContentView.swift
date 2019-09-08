@@ -1,40 +1,26 @@
 import SwiftUI
 
-struct Entry {
-    let word: String
-    let translation: String
-    let sentence: String
-    let definition: String
-}
-
 struct ContentView: View {
-    @State private var word: String = ""
-    @State private var translation: String = ""
-    @State private var sentence: String = ""
+    @ObservedObject var viewModel: AddFlashcardViewModel
     
     var body: some View {
         NavigationView {
             Form {
                 Section {
-                    TextField("Question", text: $word)
-                    TextField("Answer", text: $translation)
-                    TextField("Example usage", text: $sentence)
+                    TextField("Question", text: $viewModel.flashcard.question)
+                    TextField("Answer", text: $viewModel.flashcard.answer)
+                    TextField("Explanation", text: $viewModel.flashcard.explanation)
+                    TextField("Example usage", text: $viewModel.flashcard.exampleUsage)
                 }
                 
                 Section { 
                     Button(action: {
-                        print(self.word)
+                        self.viewModel.save()
                     }) {
                         Text("Add")
                     }
                 }
             }.navigationBarTitle("Flashcards")
         }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }
