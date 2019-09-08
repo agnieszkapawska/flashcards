@@ -3,7 +3,9 @@ package com.agnieszkapawska.flashcards.domain.models;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -25,5 +27,21 @@ public class Flashcard {
             joinColumns = {@JoinColumn(name = "flashcard_id")},
             inverseJoinColumns = {@JoinColumn(name = "questionTag_id")}
     )
-    private Set<QuestionTags> questionTagsList = new HashSet<>();
+    private Set<QuestionTag> questionTagsList = new HashSet<>();
+
+    @Override
+    public String toString() {
+        List<String> questionTagsNameList = new ArrayList<>();
+        for (QuestionTag questionTag : questionTagsList) {
+            questionTagsNameList.add(questionTag.getName());
+        }
+        return "Flashcard{" +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                ", answer='" + answer + '\'' +
+                ", exampleUsage='" + exampleUsage + '\'' +
+                ", explanation='" + explanation + '\'' +
+                ", questionTagsList=" + questionTagsList.toString() +
+                '}';
+    }
 }

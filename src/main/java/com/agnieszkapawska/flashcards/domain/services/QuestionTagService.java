@@ -1,0 +1,44 @@
+package com.agnieszkapawska.flashcards.domain.services;
+
+import com.agnieszkapawska.flashcards.domain.models.Flashcard;
+import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
+import com.agnieszkapawska.flashcards.domain.repositories.QuestionTagRepository;
+import lombok.AllArgsConstructor;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
+@AllArgsConstructor
+public class QuestionTagService {
+    private QuestionTagRepository questionTagRepository;
+
+    public Set<QuestionTag> getQuestionTagsSet(Set<String> questionTagsName, Flashcard flashcard) {
+        Set<QuestionTag> questionTagSet = new HashSet<>();
+        for (String questionTagName:questionTagsName){
+            QuestionTag questionTag = checkQuestionTagIsPresentIfNotCreateNewQuestionTagAndAddFlashcardToItsSet(questionTagName, flashcard);
+            questionTagSet.add(questionTag);
+        }
+        return questionTagSet;
+    }
+
+    private QuestionTag checkQuestionTagIsPresentIfNotCreateNewQuestionTagAndAddFlashcardToItsSet(String questionTagName, Flashcard flashcard) {
+        Optional<QuestionTag> optionalQuestionTag = checkQuestionTagIsPresentByName(questionTagName);
+        if(optionalQuestionTag.isPresent()) {
+            addFlashcardToSet(optionalQuestionTag.get(), flashcard);
+            return optionalQuestionTag.get();
+        } else {
+            QuestionTag questionTag = new QuestionTag(questionTagName);
+            questionTagRepository.save(questionTag);
+            addFlashcardToSet(questionTag, flashcard);
+            return questionTag;
+        }
+    }
+
+    private Optional<QuestionTag> checkQuestionTagIsPresentByName(String questionTagName) {
+        return questionTagRepository.findByName(questionTagName);
+    }
+
+    private void addFlashcardToSet(QuestionTag questionTag, Flashcard flashcard) {
+        questionTag.getFlashcards().add(flashcard);
+    }
+}
