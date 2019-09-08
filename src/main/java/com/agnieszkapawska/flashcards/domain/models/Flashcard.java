@@ -1,5 +1,6 @@
 package com.agnieszkapawska.flashcards.domain.models;
 
+import com.agnieszkapawska.flashcards.domain.dtos.FlashcardDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -43,5 +44,12 @@ public class Flashcard {
                 ", explanation='" + explanation + '\'' +
                 ", questionTagsList=" + questionTagsList.toString() +
                 '}';
+    }
+
+    public void setChanges(FlashcardDto flashcardDto) {
+        this.setQuestion(flashcardDto.getQuestion());
+        this.setAnswer(flashcardDto.getAnswer());
+        this.setExampleUsage(flashcardDto.getExampleUsage());
+        this.setExplanation(flashcardDto.getExplanation());
     }
 }

@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -32,5 +34,12 @@ public class FlashcardFacade {
         } catch (Exception exception) {
             throw new EntityNotCreatedException("something went wrong");
         }
+    }
+
+    public FlashcardSaveResponseDto editFlashcard(FlashcardDto flashcardDto, Long id) {
+        Flashcard flashcardFound = flashcardService.findById(id);
+        flashcardFound.setChanges(flashcardDto);
+        flashcardService.saveFlashcard(flashcardFound);
+        return modelMapper.map(flashcardFound, FlashcardSaveResponseDto.class);
     }
 }
