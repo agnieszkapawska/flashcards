@@ -42,7 +42,7 @@ public class QuestionTagService {
             if(foundQuestionTagOptional.isPresent()) {
                 QuestionTag questionTag = foundQuestionTagOptional.get();
                 questionTag.getFlashcards().remove(flashcardFound);
-                flashcardFound.getQuestionTagsList().remove(questionTag);
+                flashcardFound.getQuestionTagsSet().remove(questionTag);
                 if(questionTag.getFlashcards().isEmpty()) {
                     questionTagRepository.delete(questionTag);
                 }
@@ -54,12 +54,12 @@ public class QuestionTagService {
             if(foundQuestionTagOptional.isPresent()) {
                 QuestionTag questionTag = foundQuestionTagOptional.get();
                 questionTag.getFlashcards().add(flashcardFound);
-                flashcardFound.getQuestionTagsList().add(questionTag);
+                flashcardFound.getQuestionTagsSet().add(questionTag);
             } else {
                 QuestionTag questionTag = new QuestionTag(tagName);
                 questionTagRepository.save(questionTag);
-                addFlashcardToSet(questionTag, flashcardFound);
-                flashcardFound.getQuestionTagsList().add(questionTag);
+                //addFlashcardToSet(questionTag, flashcardFound);
+                flashcardFound.getQuestionTagsSet().add(questionTag);
             }
         }
 

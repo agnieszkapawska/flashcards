@@ -43,7 +43,7 @@ public class FlashcardFacade {
 
     public FlashcardSaveResponseDto editFlashcard(FlashcardDto flashcardDto, Long id) {
         Flashcard flashcardFound = flashcardService.findById(id);
-        Map<String, Set<String>> tagsToUpdate = compareQuestionTagSets(flashcardFound.getQuestionTagsList(), flashcardDto.getTagsList());
+        Map<String, Set<String>> tagsToUpdate = compareQuestionTagSets(flashcardFound.getQuestionTagsSet(), flashcardDto.getTagsList());
         questionTagService.updateFlashcardSet(tagsToUpdate, flashcardFound);
         flashcardFound.setChanges(flashcardDto);
         flashcardService.saveFlashcard(flashcardFound);
