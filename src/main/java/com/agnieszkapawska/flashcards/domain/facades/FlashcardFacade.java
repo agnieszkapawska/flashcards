@@ -7,13 +7,12 @@ import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
 import com.agnieszkapawska.flashcards.domain.services.QuestionTagService;
+import com.agnieszkapawska.flashcards.domain.utils.CompareQuestionTagsSets;
 import com.google.common.collect.Sets;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -41,25 +40,34 @@ public class FlashcardFacade {
         }
     }
 
-    public FlashcardSaveResponseDto editFlashcard(FlashcardDto flashcardDto, Long id) {
+    public FlashcardSaveResponseDto updateFlashcard(FlashcardDto flashcardDto, Long id) {
         Flashcard flashcardFound = flashcardService.findById(id);
-        Map<String, Set<String>> tagsToUpdate = compareQuestionTagSets(flashcardFound.getQuestionTagsSet(), flashcardDto.getTagsList());
+
+        CompareQuestionTagsSets tagsToUpdate = compareQuestionTagSets(flashcardFound.getQuestionTagsSet(), flashcardDto.getTagsList());
         questionTagService.updateFlashcardSet(tagsToUpdate, flashcardFound);
+
+        Set<QuestionTag> questionTagsToAddSet = questionTagService.getQuestionTagsSet(tagsToUpdate.getTagsNamesToAdd());
+        Set<QuestionTag> questionTagsToRemoveSet = questionTagService.getQuestionTagsSet(tagsToUpdate.getTagsNamesToRemove());
+        flashcardFound.getQuestionTagsSet().addAll(questionTagsToAddSet);
+        flashcardFound.getQuestionTagsSet().removeAll(questionTagsToRemoveSet);
+
         flashcardFound.setChanges(flashcardDto);
         flashcardService.saveFlashcard(flashcardFound);
+
         return modelMapper.map(flashcardFound, FlashcardSaveResponseDto.class);
     }
-    private Map<String, Set<String>> compareQuestionTagSets(Set<QuestionTag> questionTagsList, Set<String> tagsListEditFlashcard) {
-        Set<String> tagsListSavedFlashcard = new HashSet<>();
-        Map<String, Set<String>> tagsToRemoveAndAdd = new HashMap<>();
-        for (QuestionTag questionTag:questionTagsList) {
-            tagsListSavedFlashcard.add(questionTag.getName());
-        }
-        Set<String> tagsToRemove = (Set) Sets.difference(tagsListSavedFlashcard, tagsListEditFlashcard);
-        Set<String> tagsToAdd = (Set) Sets.difference(tagsListEditFlashcard, tagsListSavedFlashcard);
-        tagsToRemoveAndAdd.put("tagsToRemove", tagsToRemove);
-        tagsToRemoveAndAdd.put("tagsToAdd", tagsToAdd);
-        return tagsToRemoveAndAdd;
+    private CompareQuestionTagsSets compareQuestionTagSets(Set<QuestionTag> questionTagsSetBeforeChanges, Set<String> questionTagsNamesSetActual) {
+        CompareQuestionTagsSets compareQuestionTagsSets = new CompareQuestionTagsSets();
+
+        HashSet<String> tagsNamesSetBeforeChanges = new HashSet<>();
+        questionTagsSetBeforeChanges.forEach(questionTag -> tagsNamesSetBeforeChanges.add(questionTag.getName()));
+
+        Set<String> tagsToRemove = Sets.difference(tagsNamesSetBeforeChanges, questionTagsNamesSetActual);
+        Set<String> tagsToAdd = Sets.difference(questionTagsNamesSetActual, tagsNamesSetBeforeChanges);
+        compareQuestionTagsSets.setTagsNamesToRemove(tagsToRemove);
+        compareQuestionTagsSets.setTagsNamesToAdd(tagsToAdd);
+
+        return compareQuestionTagsSets;
     }
 
 }

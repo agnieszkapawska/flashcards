@@ -1,13 +1,13 @@
 package com.agnieszkapawska.flashcards.domain.services;
 
 
+import com.agnieszkapawska.flashcards.domain.exceptions.EntityCouldNotBeFoundException;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
 import com.agnieszkapawska.flashcards.domain.repositories.QuestionTagRepository;
+import com.agnieszkapawska.flashcards.domain.utils.CompareQuestionTagsSets;
 import lombok.AllArgsConstructor;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -36,32 +36,20 @@ public class QuestionTagService {
         questionTagRepository.save(questionTag);
     }
 
-    public void updateFlashcardSet(Map<String, Set<String>> tagsToUpdate, Flashcard flashcardFound) {
-        for (String tagName:tagsToUpdate.get("tagsToRemove")) {
-            Optional<QuestionTag> foundQuestionTagOptional = questionTagRepository.findByName(tagName);
-            if(foundQuestionTagOptional.isPresent()) {
-                QuestionTag questionTag = foundQuestionTagOptional.get();
-                questionTag.getFlashcards().remove(flashcardFound);
-                flashcardFound.getQuestionTagsSet().remove(questionTag);
-                if(questionTag.getFlashcards().isEmpty()) {
-                    questionTagRepository.delete(questionTag);
-                }
-            }
-
-        }
-        for (String tagName:tagsToUpdate.get("tagsToAdd")) {
-            Optional<QuestionTag> foundQuestionTagOptional = questionTagRepository.findByName(tagName);
-            if(foundQuestionTagOptional.isPresent()) {
-                QuestionTag questionTag = foundQuestionTagOptional.get();
-                questionTag.getFlashcards().add(flashcardFound);
-                flashcardFound.getQuestionTagsSet().add(questionTag);
-            } else {
-                QuestionTag questionTag = new QuestionTag(tagName);
-                questionTagRepository.save(questionTag);
-                //addFlashcardToSet(questionTag, flashcardFound);
-                flashcardFound.getQuestionTagsSet().add(questionTag);
-            }
-        }
-
+    public void updateFlashcardSet(CompareQuestionTagsSets tagsToUpdate, Flashcard flashcard) {
+        //remove
+        tagsToUpdate.getTagsNamesToRemove().forEach(questionTagName -> {
+            questionTagRepository.findByName(questionTagName).orElseThrow(
+                    () -> new EntityCouldNotBeFoundException("Question tag couldn't be found"))
+                    .getFlashcards().remove(flashcard);
+        });
+        //add
+        tagsToUpdate.getTagsNamesToAdd().forEach(questionTagName -> {
+            questionTagRepository.findByName(questionTagName).orElseGet(
+                    () -> {
+                        return questionTagRepository.save(new QuestionTag(questionTagName));
+                    })
+                    .getFlashcards().add(flashcard);
+        });
     }
 }

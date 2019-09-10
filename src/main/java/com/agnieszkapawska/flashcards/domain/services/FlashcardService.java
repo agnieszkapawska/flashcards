@@ -4,6 +4,7 @@ import com.agnieszkapawska.flashcards.domain.exceptions.EntityCouldNotBeFoundExc
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import com.agnieszkapawska.flashcards.domain.repositories.FlashcardRepository;
 import lombok.AllArgsConstructor;
+
 import javax.persistence.EntityNotFoundException;
 
 @AllArgsConstructor

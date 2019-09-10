@@ -21,7 +21,7 @@ public class FlashcardController {
 
     @PutMapping("/{id}")
     public ResponseEntity<FlashcardSaveResponseDto> editFlashcard(@RequestBody FlashcardDto flashcardDto, @PathVariable Long id) {
-        return new ResponseEntity<>(flashcardFacade.editFlashcard(flashcardDto, id), HttpStatus.OK);
+        return new ResponseEntity<>(flashcardFacade.updateFlashcard(flashcardDto, id), HttpStatus.OK);
     }
 
 }
