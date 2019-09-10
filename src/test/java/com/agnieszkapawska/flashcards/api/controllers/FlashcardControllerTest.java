@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 public class FlashcardControllerTest extends FlashcardsApplicationAbstractTests {
 
     @Test
-    public void shouldReturnStatusOkWhenSavingFlashcard() {
+    public void shouldReturn_StatusOk_WhenSavingFlashcard() {
         //given
         when(super.flashcardFacade.saveFlashcard(any(FlashcardDto.class))).thenReturn(super.flashcardSaveResponseDto);
         //when
@@ -23,10 +23,11 @@ public class FlashcardControllerTest extends FlashcardsApplicationAbstractTests 
                 testRestTemplate.postForEntity(super.baseUrl + "/flashcard", super.flashcardDto, FlashcardSaveResponseDto.class);
         //then
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assert.assertEquals(super.flashcardSaveResponseDto, responseEntity.getBody());
     }
 
     @Test
-    public void shouldReturnStatusConflictWhenSavingFlashcard() {
+    public void shouldReturn_StatusConflict_WhenSavingFlashcard_When_CouldNotCreateEntity() {
         //given
         doThrow(new EntityNotCreatedException("something went wrong"))
                 .when(super.flashcardFacade).saveFlashcard(any(FlashcardDto.class));

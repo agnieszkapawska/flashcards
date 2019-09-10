@@ -21,10 +21,14 @@ public class FlashcardFacade {
 
     public FlashcardSaveResponseDto saveFlashcard(FlashcardDto flashcardDto) {
         Flashcard flashcard = modelMapper.map(flashcardDto, Flashcard.class);
-        try{
+        try {
             Flashcard savedFlashcard = flashcardService.saveFlashcard(flashcard);
-            Set<QuestionTag> questionTagsSet = questionTagService.getQuestionTagsSet(flashcardDto.getTagsList(), flashcard);
-            savedFlashcard.setQuestionTagsList(questionTagsSet);
+            Set<QuestionTag> questionTagsSet = questionTagService.getQuestionTagsSet(flashcardDto.getTagsList());
+            questionTagsSet.forEach(questionTag -> {
+                questionTag.getFlashcards().add(savedFlashcard);
+                questionTagService.save(questionTag);
+            });
+            savedFlashcard.setQuestionTagsSet(questionTagsSet);
             flashcardService.saveFlashcard(savedFlashcard);
             return modelMapper.map(savedFlashcard, FlashcardSaveResponseDto.class);
         } catch (DataIntegrityViolationException exception) {

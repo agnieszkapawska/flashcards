@@ -14,7 +14,7 @@ public class QuestionTag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @ManyToMany(mappedBy = "questionTagsList")
+    @ManyToMany(mappedBy = "questionTagsSet")
     private Set<Flashcard> flashcards = new HashSet<>();
 
     public QuestionTag(String name) {

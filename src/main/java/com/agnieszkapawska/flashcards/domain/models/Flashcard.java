@@ -27,21 +27,22 @@ public class Flashcard {
             joinColumns = {@JoinColumn(name = "flashcard_id")},
             inverseJoinColumns = {@JoinColumn(name = "questionTag_id")}
     )
-    private Set<QuestionTag> questionTagsList = new HashSet<>();
+    private Set<QuestionTag> questionTagsSet = new HashSet<>();
 
     @Override
     public String toString() {
-        List<String> questionTagsNameList = new ArrayList<>();
-        for (QuestionTag questionTag : questionTagsList) {
-            questionTagsNameList.add(questionTag.getName());
+        List<String> questionTagsNameSet = new ArrayList<>();
+        for (QuestionTag questionTag : questionTagsSet) {
+            questionTagsNameSet.add(questionTag.getName());
         }
+
         return "Flashcard{" +
                 "id=" + id +
                 ", question='" + question + '\'' +
                 ", answer='" + answer + '\'' +
                 ", exampleUsage='" + exampleUsage + '\'' +
                 ", explanation='" + explanation + '\'' +
-                ", questionTagsList=" + questionTagsList.toString() +
+                ", questionTagsSet=" + questionTagsNameSet.toString() +
                 '}';
     }
 }
