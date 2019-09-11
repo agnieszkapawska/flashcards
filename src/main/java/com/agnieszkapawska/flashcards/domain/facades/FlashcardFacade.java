@@ -11,7 +11,6 @@ import com.agnieszkapawska.flashcards.domain.utils.CompareQuestionTagsSets;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -69,6 +68,10 @@ public class FlashcardFacade {
         return modelMapper.map(existingFlashcard, FlashcardSaveResponseDto.class);
     }
 
+    /*
+        method update flashcardSets in questionTags
+        and returns questionTags which have empty flashcardsSet and these questionTags can be removed from database
+    */
     private Set<QuestionTag> updateFlashcardSet(Set<QuestionTag> tagsToAdd, Set<QuestionTag> tagsToRemove, Flashcard flashcard) {
         Set<QuestionTag> uselessQuestionTags = new HashSet<>();
         //add

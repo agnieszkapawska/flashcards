@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 public class FlashcardControllerTest extends FlashcardsApplicationAbstractTests {
 
     @Test
-    public void shouldReturn_StatusOk_WhenSavingFlashcard() {
+    public void shouldReturnStatusOk_WhenSavingFlashcard() {
         //given
         when(super.flashcardFacade.saveFlashcard(any(FlashcardDto.class))).thenReturn(super.flashcardSaveResponseDto);
         //when
