@@ -12,7 +12,9 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class FlashcardFacade {
@@ -86,5 +88,12 @@ public class FlashcardFacade {
             }
         });
         return uselessQuestionTags;
+    }
+
+    public List<FlashcardDto> getAllFlashcards() {
+        List<Flashcard> allFlashcards = flashcardService.findAll();
+        return allFlashcards.stream()
+                .map(flashcard -> modelMapper.map(flashcard, FlashcardDto.class))
+                .collect(Collectors.toList());
     }
 }

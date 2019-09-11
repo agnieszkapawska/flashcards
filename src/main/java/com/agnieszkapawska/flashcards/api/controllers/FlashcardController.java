@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/flashcard")
@@ -22,6 +24,11 @@ public class FlashcardController {
     @PutMapping("/{id}")
     public ResponseEntity<FlashcardSaveResponseDto> updateFlashcard(@RequestBody FlashcardDto flashcardDto, @PathVariable Long id) {
         return new ResponseEntity<>(flashcardFacade.updateFlashcard(flashcardDto, id), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<FlashcardDto>> getAllFlashcards() {
+        return new ResponseEntity<>(flashcardFacade.getAllFlashcards(), HttpStatus.OK);
     }
 
 }
