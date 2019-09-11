@@ -1,9 +1,12 @@
 package com.agnieszkapawska.flashcards.domain.models;
 
+import com.agnieszkapawska.flashcards.domain.dtos.FlashcardDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -19,11 +22,35 @@ public class Flashcard {
     private String answer;
     private String exampleUsage;
     private String explanation;
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany
     @JoinTable(
             name = "Flashcard_QuestionTag",
             joinColumns = {@JoinColumn(name = "flashcard_id")},
             inverseJoinColumns = {@JoinColumn(name = "questionTag_id")}
     )
-    private Set<QuestionTags> questionTagsList = new HashSet<>();
+    private Set<QuestionTag> questionTagsSet = new HashSet<>();
+
+    @Override
+    public String toString() {
+        List<String> questionTagsNameSet = new ArrayList<>();
+        for (QuestionTag questionTag : questionTagsSet) {
+            questionTagsNameSet.add(questionTag.getName());
+        }
+
+        return "Flashcard{" +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                ", answer='" + answer + '\'' +
+                ", exampleUsage='" + exampleUsage + '\'' +
+                ", explanation='" + explanation + '\'' +
+                ", questionTagsSet=" + questionTagsNameSet.toString() +
+                '}';
+    }
+
+    public void setChanges(FlashcardDto flashcardDto) {
+        this.setQuestion(flashcardDto.getQuestion());
+        this.setAnswer(flashcardDto.getAnswer());
+        this.setExampleUsage(flashcardDto.getExampleUsage());
+        this.setExplanation(flashcardDto.getExplanation());
+    }
 }

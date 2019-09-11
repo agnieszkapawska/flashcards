@@ -6,10 +6,7 @@ import com.agnieszkapawska.flashcards.domain.facades.FlashcardFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -20,6 +17,11 @@ public class FlashcardController {
     @PostMapping(consumes = "application/json")
     public ResponseEntity<FlashcardSaveResponseDto> saveFlashcard(@RequestBody FlashcardDto flashcardDto) {
         return new ResponseEntity<>(flashcardFacade.saveFlashcard(flashcardDto), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<FlashcardSaveResponseDto> updateFlashcard(@RequestBody FlashcardDto flashcardDto, @PathVariable Long id) {
+        return new ResponseEntity<>(flashcardFacade.updateFlashcard(flashcardDto, id), HttpStatus.OK);
     }
 
 }
