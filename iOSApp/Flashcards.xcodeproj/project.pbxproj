@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F77D2CA2329782900980A52 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F77D2C92329782900980A52 /* Networking.swift */; };
 		3F9C61ED2323E84600B88D79 /* AddFlashcardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9C61EC2323E84600B88D79 /* AddFlashcardViewModel.swift */; };
 		3FD0AC71231EE3F60081549B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD0AC70231EE3F60081549B /* AppDelegate.swift */; };
 		3FD0AC73231EE3F60081549B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD0AC72231EE3F60081549B /* SceneDelegate.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F77D2C92329782900980A52 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		3F9C61EC2323E84600B88D79 /* AddFlashcardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFlashcardViewModel.swift; sourceTree = "<group>"; };
 		3FD0AC6D231EE3F60081549B /* Flashcards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flashcards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD0AC70231EE3F60081549B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +80,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F77D2C82329781A00980A52 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3F77D2C92329782900980A52 /* Networking.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		3FD0AC64231EE3F60081549B = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +111,7 @@
 		3FD0AC6F231EE3F60081549B /* Flashcards */ = {
 			isa = PBXGroup;
 			children = (
+				3F77D2C82329781A00980A52 /* Utils */,
 				3FD0AC70231EE3F60081549B /* AppDelegate.swift */,
 				3FD0AC72231EE3F60081549B /* SceneDelegate.swift */,
 				3FD0AC74231EE3F60081549B /* ContentView.swift */,
@@ -271,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FD0AC71231EE3F60081549B /* AppDelegate.swift in Sources */,
+				3F77D2CA2329782900980A52 /* Networking.swift in Sources */,
 				3FD0AC73231EE3F60081549B /* SceneDelegate.swift in Sources */,
 				3FD0AC75231EE3F60081549B /* ContentView.swift in Sources */,
 				3F9C61ED2323E84600B88D79 /* AddFlashcardViewModel.swift in Sources */,
