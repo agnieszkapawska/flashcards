@@ -36,12 +36,16 @@ public class QuestionTagService {
         questionTagRepository.save(questionTag);
     }
 
-    public void updateFlashcardSet(CompareQuestionTagsSets tagsToUpdate, Flashcard flashcard) {
+    public Set<QuestionTag> updateFlashcardSet(CompareQuestionTagsSets tagsToUpdate, Flashcard flashcard) {
+        Set<QuestionTag> uselessQuestionTags = new HashSet<>();
         //remove
         tagsToUpdate.getTagsNamesToRemove().forEach(questionTagName -> {
-            questionTagRepository.findByName(questionTagName).orElseThrow(
-                    () -> new EntityCouldNotBeFoundException("Question tag couldn't be found"))
-                    .getFlashcards().remove(flashcard);
+            QuestionTag questionTag = questionTagRepository.findByName(questionTagName).orElseThrow(
+                    () -> new EntityCouldNotBeFoundException("Question tag couldn't be found"));
+            questionTag.getFlashcards().remove(flashcard);
+            if(questionTag.getFlashcards().isEmpty()) {
+              uselessQuestionTags.add(questionTag);
+            }
         });
         //add
         tagsToUpdate.getTagsNamesToAdd().forEach(questionTagName -> {
@@ -50,6 +54,13 @@ public class QuestionTagService {
                         return questionTagRepository.save(new QuestionTag(questionTagName));
                     })
                     .getFlashcards().add(flashcard);
+        });
+        return uselessQuestionTags;
+    }
+
+    public void deleteUselessQuestionTags(Set<QuestionTag> questionTags) {
+        questionTags.forEach(questionTag -> {
+            questionTagRepository.delete(questionTag);
         });
     }
 }

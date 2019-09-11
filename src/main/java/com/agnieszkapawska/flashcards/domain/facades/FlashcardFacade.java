@@ -44,7 +44,7 @@ public class FlashcardFacade {
         Flashcard flashcardFound = flashcardService.findById(id);
 
         CompareQuestionTagsSets tagsToUpdate = compareQuestionTagSets(flashcardFound.getQuestionTagsSet(), flashcardDto.getTagsList());
-        questionTagService.updateFlashcardSet(tagsToUpdate, flashcardFound);
+        Set<QuestionTag> questionTagsUseless = questionTagService.updateFlashcardSet(tagsToUpdate, flashcardFound);
 
         Set<QuestionTag> questionTagsToAddSet = questionTagService.getQuestionTagsSet(tagsToUpdate.getTagsNamesToAdd());
         Set<QuestionTag> questionTagsToRemoveSet = questionTagService.getQuestionTagsSet(tagsToUpdate.getTagsNamesToRemove());
@@ -52,7 +52,17 @@ public class FlashcardFacade {
         flashcardFound.getQuestionTagsSet().removeAll(questionTagsToRemoveSet);
 
         flashcardFound.setChanges(flashcardDto);
+        try {
         flashcardService.saveFlashcard(flashcardFound);
+        } catch (DataIntegrityViolationException exception) {
+            throw new EntityNotCreatedException("constraint violation exception");
+        } catch (Exception exception) {
+            throw new EntityNotCreatedException("something went wrong");
+        }
+
+        if(!questionTagsUseless.isEmpty()) {
+            questionTagService.deleteUselessQuestionTags(questionTagsUseless);
+        }
 
         return modelMapper.map(flashcardFound, FlashcardSaveResponseDto.class);
     }

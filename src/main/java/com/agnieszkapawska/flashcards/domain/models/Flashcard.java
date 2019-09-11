@@ -22,7 +22,7 @@ public class Flashcard {
     private String answer;
     private String exampleUsage;
     private String explanation;
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany
     @JoinTable(
             name = "Flashcard_QuestionTag",
             joinColumns = {@JoinColumn(name = "flashcard_id")},
