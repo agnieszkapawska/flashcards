@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct ContentView: View {
-    @ObservedObject var viewModel: AddFlashcardViewModel
+struct NewFlashcardView: View {
+    @ObservedObject var viewModel: NewFlashcardViewModel
     
     var body: some View {
         NavigationView {
@@ -20,7 +20,7 @@ struct ContentView: View {
                         Text("Add")
                     }
                 }
-            }.navigationBarTitle("Flashcards")
+            }.navigationBarTitle("New flashcard")
              .alert(isPresented: $viewModel.presentingAlert) { () -> Alert in
                 Alert(title: Text("Message"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("ok")))
              }

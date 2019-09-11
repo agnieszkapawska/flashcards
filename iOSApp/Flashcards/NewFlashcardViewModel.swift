@@ -8,7 +8,7 @@ struct Flashcard: Encodable {
     var explanation: String = ""
 }
 
-final class AddFlashcardViewModel: Identifiable, ObservableObject {
+final class NewFlashcardViewModel: Identifiable, ObservableObject {
     
     @Published var flashcard = Flashcard()
     @Published var presentingAlert = false

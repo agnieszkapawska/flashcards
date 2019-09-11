@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3F77D2CA2329782900980A52 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F77D2C92329782900980A52 /* Networking.swift */; };
-		3F9C61ED2323E84600B88D79 /* AddFlashcardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9C61EC2323E84600B88D79 /* AddFlashcardViewModel.swift */; };
+		3F9C61ED2323E84600B88D79 /* NewFlashcardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9C61EC2323E84600B88D79 /* NewFlashcardViewModel.swift */; };
 		3FD0AC71231EE3F60081549B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD0AC70231EE3F60081549B /* AppDelegate.swift */; };
 		3FD0AC73231EE3F60081549B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD0AC72231EE3F60081549B /* SceneDelegate.swift */; };
-		3FD0AC75231EE3F60081549B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD0AC74231EE3F60081549B /* ContentView.swift */; };
+		3FD0AC75231EE3F60081549B /* NewFlashcardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD0AC74231EE3F60081549B /* NewFlashcardView.swift */; };
 		3FD0AC77231EE3F80081549B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FD0AC76231EE3F80081549B /* Assets.xcassets */; };
 		3FD0AC7A231EE3F80081549B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FD0AC79231EE3F80081549B /* Preview Assets.xcassets */; };
 		3FD0AC7D231EE3F80081549B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FD0AC7B231EE3F80081549B /* LaunchScreen.storyboard */; };
@@ -38,11 +38,11 @@
 
 /* Begin PBXFileReference section */
 		3F77D2C92329782900980A52 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
-		3F9C61EC2323E84600B88D79 /* AddFlashcardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFlashcardViewModel.swift; sourceTree = "<group>"; };
+		3F9C61EC2323E84600B88D79 /* NewFlashcardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFlashcardViewModel.swift; sourceTree = "<group>"; };
 		3FD0AC6D231EE3F60081549B /* Flashcards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flashcards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD0AC70231EE3F60081549B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FD0AC72231EE3F60081549B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3FD0AC74231EE3F60081549B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		3FD0AC74231EE3F60081549B /* NewFlashcardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFlashcardView.swift; sourceTree = "<group>"; };
 		3FD0AC76231EE3F80081549B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3FD0AC79231EE3F80081549B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3FD0AC7C231EE3F80081549B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -114,8 +114,8 @@
 				3F77D2C82329781A00980A52 /* Utils */,
 				3FD0AC70231EE3F60081549B /* AppDelegate.swift */,
 				3FD0AC72231EE3F60081549B /* SceneDelegate.swift */,
-				3FD0AC74231EE3F60081549B /* ContentView.swift */,
-				3F9C61EC2323E84600B88D79 /* AddFlashcardViewModel.swift */,
+				3FD0AC74231EE3F60081549B /* NewFlashcardView.swift */,
+				3F9C61EC2323E84600B88D79 /* NewFlashcardViewModel.swift */,
 				3FD0AC76231EE3F80081549B /* Assets.xcassets */,
 				3FD0AC7B231EE3F80081549B /* LaunchScreen.storyboard */,
 				3FD0AC7E231EE3F80081549B /* Info.plist */,
@@ -284,8 +284,8 @@
 				3FD0AC71231EE3F60081549B /* AppDelegate.swift in Sources */,
 				3F77D2CA2329782900980A52 /* Networking.swift in Sources */,
 				3FD0AC73231EE3F60081549B /* SceneDelegate.swift in Sources */,
-				3FD0AC75231EE3F60081549B /* ContentView.swift in Sources */,
-				3F9C61ED2323E84600B88D79 /* AddFlashcardViewModel.swift in Sources */,
+				3FD0AC75231EE3F60081549B /* NewFlashcardView.swift in Sources */,
+				3F9C61ED2323E84600B88D79 /* NewFlashcardViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
