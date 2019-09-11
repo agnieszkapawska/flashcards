@@ -1,6 +1,7 @@
 import Combine
+import Foundation
 
-struct Flashcard {
+struct Flashcard: Encodable {
     var question: String = ""
     var answer: String = ""
     var exampleUsage: String = ""
@@ -9,45 +10,30 @@ struct Flashcard {
 
 final class AddFlashcardViewModel: Identifiable, ObservableObject {
     
-    @Published
-    var flashcard = Flashcard()
-     
+    @Published var flashcard = Flashcard()
+    @Published var presentingAlert = false
+    var alertMessage = ""
+
+    private var disposables = Set<AnyCancellable>()
+    
     func save() {
-        print("\(flashcard.question)  \(flashcard.answer)  \(flashcard.exampleUsage)  \(flashcard.explanation)")
-    }
-}
-
-import Foundation
-
-enum NetworkingError: Error {
-    case network(description: String)
-    case parsing(description: String)
-}
-
-struct Networking {
-    func execute<Model: Decodable>() -> AnyPublisher<Model, NetworkingError> {
-        let url = URL(string: "whaever")!
-        return URLSession.shared.dataTaskPublisher(for: url)
-                .mapError { error in
-                    .network(description: error.localizedDescription)
-                }
-                .flatMap(maxPublishers: .max(1)) { output in
-                    Model.decode(output.data)
-                }
-                .eraseToAnyPublisher()
-    }
-}
-
-extension Decodable {
-    static func decode(_ data: Data) -> AnyPublisher<Self, NetworkingError> {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .secondsSince1970
-        
-        return Just(data)
-            .decode(type: Self.self, decoder: decoder)
-          .mapError { error in
-            .parsing(description: error.localizedDescription)
-          }
-          .eraseToAnyPublisher()
+        Networking().execute(model: flashcard as Encodable)
+            .receive(on: DispatchQueue.main)
+            .sink(
+                    receiveCompletion: { value in
+                      switch value {
+                      case .failure(let error):
+                        self.alertMessage = error.localizedDescription
+                        self.presentingAlert = true
+                      case .finished:
+                        break
+                      }
+                    },
+                    receiveValue: { (response: Response) in
+                        print(response.id)
+                        self.alertMessage = "You got it right!"
+                        self.presentingAlert = true
+                  })
+            .store(in: &disposables)
     }
 }

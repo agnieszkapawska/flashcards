@@ -21,6 +21,9 @@ struct ContentView: View {
                     }
                 }
             }.navigationBarTitle("Flashcards")
+             .alert(isPresented: $viewModel.presentingAlert) { () -> Alert in
+                Alert(title: Text("Message"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("ok")))
+             }
         }
     }
 }
