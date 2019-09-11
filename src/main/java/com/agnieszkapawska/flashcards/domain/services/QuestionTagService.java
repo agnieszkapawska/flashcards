@@ -26,7 +26,6 @@ public class QuestionTagService {
     private QuestionTag getQuestionTagIfPresentOrCreateNewIfNot(String questionTagName) {
        return questionTagRepository.findByName(questionTagName).orElseGet(() -> {
             QuestionTag questionTag = new QuestionTag(questionTagName);
-            //change order ?
             questionTagRepository.save(questionTag);
             return questionTag;
         });
@@ -34,28 +33,6 @@ public class QuestionTagService {
 
     public void save(QuestionTag questionTag) {
         questionTagRepository.save(questionTag);
-    }
-
-    public Set<QuestionTag> updateFlashcardSet(CompareQuestionTagsSets tagsToUpdate, Flashcard flashcard) {
-        Set<QuestionTag> uselessQuestionTags = new HashSet<>();
-        //remove
-        tagsToUpdate.getTagsNamesToRemove().forEach(questionTagName -> {
-            QuestionTag questionTag = questionTagRepository.findByName(questionTagName).orElseThrow(
-                    () -> new EntityCouldNotBeFoundException("Question tag couldn't be found"));
-            questionTag.getFlashcards().remove(flashcard);
-            if(questionTag.getFlashcards().isEmpty()) {
-              uselessQuestionTags.add(questionTag);
-            }
-        });
-        //add
-        tagsToUpdate.getTagsNamesToAdd().forEach(questionTagName -> {
-            questionTagRepository.findByName(questionTagName).orElseGet(
-                    () -> {
-                        return questionTagRepository.save(new QuestionTag(questionTagName));
-                    })
-                    .getFlashcards().add(flashcard);
-        });
-        return uselessQuestionTags;
     }
 
     public void deleteUselessQuestionTags(Set<QuestionTag> questionTags) {

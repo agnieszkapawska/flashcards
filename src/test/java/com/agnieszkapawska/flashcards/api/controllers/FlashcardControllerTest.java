@@ -27,7 +27,7 @@ public class FlashcardControllerTest extends FlashcardsApplicationAbstractTests 
     }
 
     @Test
-    public void shouldReturn_StatusConflict_WhenSavingFlashcard_When_CouldNotCreateEntity() {
+    public void shouldReturnStatusConflict_WhenSavingFlashcard_WhenCouldNotCreateEntity() {
         //given
         doThrow(new EntityNotCreatedException("something went wrong"))
                 .when(super.flashcardFacade).saveFlashcard(any(FlashcardDto.class));
