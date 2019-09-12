@@ -1,6 +1,6 @@
 package com.agnieszkapawska.flashcards.domain.dtos;
 
-import com.agnieszkapawska.flashcards.domain.models.QuestionTags;
+import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +14,5 @@ public class FlashcardDto {
     private String answer;
     private String exampleUsage;
     private String explanation;
-    private Set<QuestionTags> tagsList;
+    private Set<String> tagsList;
 }
