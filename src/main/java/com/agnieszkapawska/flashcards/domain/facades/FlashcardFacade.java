@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -91,7 +92,7 @@ public class FlashcardFacade {
         return uselessQuestionTags;
     }
 
-    public List<FlashcardGetDto> getAllFlashcards() {
+    public List<FlashcardGetDto> getAllFlashcards(Optional<String> searchPhrase) {
         List<Flashcard> allFlashcards = flashcardService.findAll();
         return allFlashcards.stream()
                 .map(flashcard -> modelMapper.map(flashcard, FlashcardGetDto.class))
