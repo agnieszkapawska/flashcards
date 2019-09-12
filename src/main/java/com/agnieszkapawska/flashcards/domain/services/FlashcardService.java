@@ -4,10 +4,9 @@ import com.agnieszkapawska.flashcards.domain.exceptions.EntityCouldNotBeFoundExc
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import com.agnieszkapawska.flashcards.domain.repositories.FlashcardRepository;
 import lombok.AllArgsConstructor;
-
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 public class FlashcardService {
@@ -24,5 +23,14 @@ public class FlashcardService {
 
     public List<Flashcard> findAll() {
         return flashcardRepository.findAll();
+    }
+
+    public List<Flashcard> findByPhrase(String searchPhrase) {
+        List<Flashcard> flashcardsContainsSearchPhrase = new ArrayList<>();
+        flashcardRepository.findByQuestionContaining(searchPhrase)
+                .ifPresent(flashcards -> flashcardsContainsSearchPhrase.addAll(flashcards));
+        flashcardRepository.findByAnswerContaining(searchPhrase)
+                .ifPresent(flashcards -> flashcardsContainsSearchPhrase.addAll(flashcards));
+        return flashcardsContainsSearchPhrase;
     }
 }

@@ -12,10 +12,7 @@ import com.agnieszkapawska.flashcards.domain.utils.CompareQuestionTagsSets;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -93,8 +90,13 @@ public class FlashcardFacade {
     }
 
     public List<FlashcardGetDto> getAllFlashcards(Optional<String> searchPhrase) {
-        List<Flashcard> allFlashcards = flashcardService.findAll();
-        return allFlashcards.stream()
+        List<Flashcard> flashcards = new ArrayList<>();
+        if(searchPhrase.isPresent()) {
+            flashcards.addAll(flashcardService.findByPhrase(searchPhrase.get()));
+        } else {
+            flashcards.addAll(flashcardService.findAll());
+        }
+        return flashcards.stream()
                 .map(flashcard -> modelMapper.map(flashcard, FlashcardGetDto.class))
                 .collect(Collectors.toList());
     }
