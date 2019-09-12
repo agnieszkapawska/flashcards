@@ -7,6 +7,7 @@ enum AddFlashcard {
         var answer: String = ""
         var exampleUsage: String = ""
         var explanation: String = ""
+        var tagsList: [String] = []
     }
 
     struct Request: PostRequest {

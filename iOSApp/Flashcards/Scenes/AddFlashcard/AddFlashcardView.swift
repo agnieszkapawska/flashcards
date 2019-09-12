@@ -11,6 +11,7 @@ struct AddFlashcardView: View {
                     TextField("Answer", text: $viewModel.flashcard.answer)
                     TextField("Explanation", text: $viewModel.flashcard.explanation)
                     TextField("Example usage", text: $viewModel.flashcard.exampleUsage)
+                    TextField("Tags", text: $viewModel.tagsList)
                 }
                 
                 Section { 

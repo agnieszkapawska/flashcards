@@ -7,6 +7,12 @@ final class AddFlashcardViewModel: Identifiable, ObservableObject {
     private var disposables = Set<AnyCancellable>()
     
     @Published var flashcard = AddFlashcard.Flashcard()
+    @Published var tagsList: String = "" {
+        didSet {
+            flashcard.tagsList = self.tagsList.split(separator: ",")
+                                              .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+        }
+    }
     @Published var presentingAlert = false
     var alertMessage = ""
 
