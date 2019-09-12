@@ -1,6 +1,7 @@
 package com.agnieszkapawska.flashcards.api.controllers;
 
-import com.agnieszkapawska.flashcards.domain.dtos.FlashcardDto;
+import com.agnieszkapawska.flashcards.domain.dtos.FlashcardGetDto;
+import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveResponseDto;
 import com.agnieszkapawska.flashcards.domain.facades.FlashcardFacade;
 import lombok.AllArgsConstructor;
@@ -17,17 +18,17 @@ public class FlashcardController {
     private FlashcardFacade flashcardFacade;
 
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<FlashcardSaveResponseDto> saveFlashcard(@RequestBody FlashcardDto flashcardDto) {
-        return new ResponseEntity<>(flashcardFacade.saveFlashcard(flashcardDto), HttpStatus.OK);
+    public ResponseEntity<FlashcardSaveResponseDto> saveFlashcard(@RequestBody FlashcardSaveDto flashcardSaveDto) {
+        return new ResponseEntity<>(flashcardFacade.saveFlashcard(flashcardSaveDto), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FlashcardSaveResponseDto> updateFlashcard(@RequestBody FlashcardDto flashcardDto, @PathVariable Long id) {
-        return new ResponseEntity<>(flashcardFacade.updateFlashcard(flashcardDto, id), HttpStatus.OK);
+    public ResponseEntity<FlashcardSaveResponseDto> updateFlashcard(@RequestBody FlashcardSaveDto flashcardSaveDto, @PathVariable Long id) {
+        return new ResponseEntity<>(flashcardFacade.updateFlashcard(flashcardSaveDto, id), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<FlashcardDto>> getAllFlashcards() {
+    public ResponseEntity<List<FlashcardGetDto>> getAllFlashcards() {
         return new ResponseEntity<>(flashcardFacade.getAllFlashcards(), HttpStatus.OK);
     }
 
