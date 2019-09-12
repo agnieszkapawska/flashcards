@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct NewFlashcardView: View {
-    @ObservedObject var viewModel: NewFlashcardViewModel
+struct AddFlashcardView: View {
+    @ObservedObject var viewModel: AddFlashcardViewModel
     
     var body: some View {
         NavigationView {

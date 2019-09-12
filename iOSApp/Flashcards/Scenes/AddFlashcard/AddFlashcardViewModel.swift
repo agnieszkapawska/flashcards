@@ -1,23 +1,23 @@
 import Combine
 import Foundation
 
-struct Flashcard: Encodable {
-    var question: String = ""
-    var answer: String = ""
-    var exampleUsage: String = ""
-    var explanation: String = ""
-}
-
-final class NewFlashcardViewModel: Identifiable, ObservableObject {
+final class AddFlashcardViewModel: Identifiable, ObservableObject {
     
-    @Published var flashcard = Flashcard()
+    private let networking: NetworkingProtocol
+    private var disposables = Set<AnyCancellable>()
+    
+    @Published var flashcard = AddFlashcard.Flashcard()
     @Published var presentingAlert = false
     var alertMessage = ""
 
-    private var disposables = Set<AnyCancellable>()
+    
+    init(networking: NetworkingProtocol = Networking()) {
+        self.networking = networking
+    }
     
     func save() {
-        Networking().execute(model: flashcard as Encodable)
+        let request = AddFlashcard.Request(flashcard)
+        networking.execute(request)
             .receive(on: DispatchQueue.main)
             .sink(
                     receiveCompletion: { value in
@@ -29,7 +29,7 @@ final class NewFlashcardViewModel: Identifiable, ObservableObject {
                         break
                       }
                     },
-                    receiveValue: { (response: Response) in
+                    receiveValue: { (response: AddFlashcard.Response) in
                         print(response.id)
                         self.alertMessage = "You got it right!"
                         self.presentingAlert = true
