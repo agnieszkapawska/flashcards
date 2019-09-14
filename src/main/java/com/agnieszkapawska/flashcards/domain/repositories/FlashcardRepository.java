@@ -7,6 +7,5 @@ import java.util.Optional;
 
 public interface FlashcardRepository extends JpaRepository<Flashcard, Long> {
 
-    Optional<List<Flashcard>> findByQuestionContaining(String searchPhrase);
-    Optional<List<Flashcard>> findByAnswerContaining(String search);
+    Optional<List<Flashcard>> findByQuestionContainingIgnoreCaseOrAnswerContainingIgnoreCase(String searchPhrase, String searchPhrase2);
 }

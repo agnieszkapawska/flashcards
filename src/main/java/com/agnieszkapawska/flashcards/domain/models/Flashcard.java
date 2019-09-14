@@ -49,7 +49,7 @@ public class Flashcard {
                 '}';
     }
 
-    public void setChanges(FlashcardSaveDto flashcardSaveDto) {
+    public void update(FlashcardSaveDto flashcardSaveDto) {
         this.setQuestion(flashcardSaveDto.getQuestion());
         this.setAnswer(flashcardSaveDto.getAnswer());
         this.setExampleUsage(flashcardSaveDto.getExampleUsage());

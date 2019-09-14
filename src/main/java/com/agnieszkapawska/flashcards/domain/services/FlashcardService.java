@@ -27,9 +27,7 @@ public class FlashcardService {
 
     public List<Flashcard> findByPhrase(String searchPhrase) {
         List<Flashcard> flashcardsContainsSearchPhrase = new ArrayList<>();
-        flashcardRepository.findByQuestionContaining(searchPhrase)
-                .ifPresent(flashcards -> flashcardsContainsSearchPhrase.addAll(flashcards));
-        flashcardRepository.findByAnswerContaining(searchPhrase)
+        flashcardRepository.findByQuestionContainingIgnoreCaseOrAnswerContainingIgnoreCase(searchPhrase, searchPhrase)
                 .ifPresent(flashcards -> flashcardsContainsSearchPhrase.addAll(flashcards));
         return flashcardsContainsSearchPhrase;
     }

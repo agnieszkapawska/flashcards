@@ -53,7 +53,7 @@ public class FlashcardFacade {
         existingFlashcard.getQuestionTagsSet().addAll(questionTagsToAddSet);
         existingFlashcard.getQuestionTagsSet().removeAll(questionTagsToRemoveSet);
 
-        existingFlashcard.setChanges(flashcardSaveDto);
+        existingFlashcard.update(flashcardSaveDto);
         try {
         flashcardService.saveFlashcard(existingFlashcard);
         } catch (DataIntegrityViolationException exception) {

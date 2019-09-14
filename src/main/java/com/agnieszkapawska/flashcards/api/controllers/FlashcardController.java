@@ -18,7 +18,7 @@ import java.util.Optional;
 public class FlashcardController {
     private FlashcardFacade flashcardFacade;
 
-    @PostMapping(consumes = "application/json")
+    @PostMapping(consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FlashcardSaveResponseDto> saveFlashcard(@RequestBody FlashcardSaveDto flashcardSaveDto) {
         return new ResponseEntity<>(flashcardFacade.saveFlashcard(flashcardSaveDto), HttpStatus.OK);
     }
