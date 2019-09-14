@@ -1,6 +1,6 @@
 package com.agnieszkapawska.flashcards;
 
-import com.agnieszkapawska.flashcards.domain.dtos.FlashcardDto;
+import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveResponseDto;
 import com.agnieszkapawska.flashcards.domain.facades.FlashcardFacade;
 import org.junit.Before;
@@ -22,7 +22,7 @@ public abstract class FlashcardsApplicationAbstractTests {
 	@LocalServerPort
 	private int serverPort;
 	protected String baseUrl;
-	protected FlashcardDto flashcardDto;
+	protected FlashcardSaveDto flashcardSaveDto;
 	protected FlashcardSaveResponseDto flashcardSaveResponseDto;
 	@MockBean
 	protected FlashcardFacade flashcardFacade;
@@ -32,7 +32,7 @@ public abstract class FlashcardsApplicationAbstractTests {
 	@Before
 	public void setUp() {
 		baseUrl = "http://localhost:" + serverPort;
-		flashcardDto = new FlashcardDto();
+		flashcardSaveDto = new FlashcardSaveDto();
 		flashcardSaveResponseDto = new FlashcardSaveResponseDto();
 		flashcardSaveResponseDto.setId(3L);
 	}

@@ -1,6 +1,7 @@
 package com.agnieszkapawska.flashcards.domain.models;
 
-import com.agnieszkapawska.flashcards.domain.dtos.FlashcardDto;
+import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -28,6 +29,7 @@ public class Flashcard {
             joinColumns = {@JoinColumn(name = "flashcard_id")},
             inverseJoinColumns = {@JoinColumn(name = "questionTag_id")}
     )
+    @JsonManagedReference
     private Set<QuestionTag> questionTagsSet = new HashSet<>();
 
     @Override
@@ -47,10 +49,10 @@ public class Flashcard {
                 '}';
     }
 
-    public void setChanges(FlashcardDto flashcardDto) {
-        this.setQuestion(flashcardDto.getQuestion());
-        this.setAnswer(flashcardDto.getAnswer());
-        this.setExampleUsage(flashcardDto.getExampleUsage());
-        this.setExplanation(flashcardDto.getExplanation());
+    public void update(FlashcardSaveDto flashcardSaveDto) {
+        this.setQuestion(flashcardSaveDto.getQuestion());
+        this.setAnswer(flashcardSaveDto.getAnswer());
+        this.setExampleUsage(flashcardSaveDto.getExampleUsage());
+        this.setExplanation(flashcardSaveDto.getExplanation());
     }
 }

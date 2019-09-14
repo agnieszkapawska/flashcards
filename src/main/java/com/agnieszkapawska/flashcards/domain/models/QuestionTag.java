@@ -1,5 +1,6 @@
 package com.agnieszkapawska.flashcards.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class QuestionTag {
     private Long id;
     private String name;
     @ManyToMany(mappedBy = "questionTagsSet")
+    @JsonBackReference
     private Set<Flashcard> flashcards = new HashSet<>();
 
     public QuestionTag(String name) {

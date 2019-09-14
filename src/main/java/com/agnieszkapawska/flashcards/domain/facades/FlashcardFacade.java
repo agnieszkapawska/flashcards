@@ -1,6 +1,7 @@
 package com.agnieszkapawska.flashcards.domain.facades;
 
-import com.agnieszkapawska.flashcards.domain.dtos.FlashcardDto;
+import com.agnieszkapawska.flashcards.domain.dtos.FlashcardGetDto;
+import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveResponseDto;
 import com.agnieszkapawska.flashcards.domain.exceptions.EntityNotCreatedException;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
@@ -11,8 +12,8 @@ import com.agnieszkapawska.flashcards.domain.utils.CompareQuestionTagsSets;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class FlashcardFacade {
@@ -20,11 +21,11 @@ public class FlashcardFacade {
     private QuestionTagService questionTagService;
     private ModelMapper modelMapper;
 
-    public FlashcardSaveResponseDto saveFlashcard(FlashcardDto flashcardDto) {
-        Flashcard flashcard = modelMapper.map(flashcardDto, Flashcard.class);
+    public FlashcardSaveResponseDto saveFlashcard(FlashcardSaveDto flashcardSaveDto) {
+        Flashcard flashcard = modelMapper.map(flashcardSaveDto, Flashcard.class);
         try {
             Flashcard savedFlashcard = flashcardService.saveFlashcard(flashcard);
-            Set<QuestionTag> questionTagsSet = questionTagService.getQuestionTagsSet(flashcardDto.getTagsList());
+            Set<QuestionTag> questionTagsSet = questionTagService.getQuestionTagsSet(flashcardSaveDto.getTagsList());
             questionTagsSet.forEach(questionTag -> {
                 questionTag.getFlashcards().add(savedFlashcard);
             });
@@ -38,11 +39,11 @@ public class FlashcardFacade {
         }
     }
 
-    public FlashcardSaveResponseDto updateFlashcard(FlashcardDto flashcardDto, Long id) {
+    public FlashcardSaveResponseDto updateFlashcard(FlashcardSaveDto flashcardSaveDto, Long id) {
         Flashcard existingFlashcard = flashcardService.findById(id);
 
         CompareQuestionTagsSets tagsToUpdate =
-                new CompareQuestionTagsSets(existingFlashcard.getQuestionTagsSet(), flashcardDto.getTagsList());
+                new CompareQuestionTagsSets(existingFlashcard.getQuestionTagsSet(), flashcardSaveDto.getTagsList());
 
         Set<QuestionTag> questionTagsToAddSet = questionTagService.getQuestionTagsSet(tagsToUpdate.getTagsNamesToAdd());
         Set<QuestionTag> questionTagsToRemoveSet = questionTagService.getQuestionTagsSet(tagsToUpdate.getTagsNamesToRemove());
@@ -52,7 +53,7 @@ public class FlashcardFacade {
         existingFlashcard.getQuestionTagsSet().addAll(questionTagsToAddSet);
         existingFlashcard.getQuestionTagsSet().removeAll(questionTagsToRemoveSet);
 
-        existingFlashcard.setChanges(flashcardDto);
+        existingFlashcard.update(flashcardSaveDto);
         try {
         flashcardService.saveFlashcard(existingFlashcard);
         } catch (DataIntegrityViolationException exception) {
@@ -86,5 +87,20 @@ public class FlashcardFacade {
             }
         });
         return uselessQuestionTags;
+    }
+
+    public List<FlashcardGetDto> getFlashcards(Optional<String> searchPhrase, Optional<List<String>> tagsList) {
+        List<Flashcard> flashcards;
+        if(searchPhrase.isPresent()) {
+            flashcards = flashcardService.findByPhrase(searchPhrase.get());
+        } else if(tagsList.isPresent()) {
+            flashcards = questionTagService.findFlashcardsByTags(tagsList.get());
+        }
+        else {
+            flashcards = flashcardService.findAll();
+        }
+        return flashcards.stream()
+                .map(flashcard -> modelMapper.map(flashcard, FlashcardGetDto.class))
+                .collect(Collectors.toList());
     }
 }
