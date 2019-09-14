@@ -1,11 +1,14 @@
 package com.agnieszkapawska.flashcards.domain.services;
 
 
+import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
 import com.agnieszkapawska.flashcards.domain.repositories.QuestionTagRepository;
 import lombok.AllArgsConstructor;
-import java.util.HashSet;
-import java.util.Set;
+
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @AllArgsConstructor
 public class QuestionTagService {
@@ -36,5 +39,14 @@ public class QuestionTagService {
         questionTags.forEach(questionTag -> {
             questionTagRepository.delete(questionTag);
         });
+    }
+
+    public List<Flashcard> findFlashcardsByTags(List<String> tagsNames) {
+        return tagsNames.stream()
+                .map(tagName -> questionTagRepository.findByName(tagName))
+                .flatMap(questionTag -> questionTag.isPresent()? Stream.of(questionTag.get()):Stream.empty())
+                .map(QuestionTag::getFlashcards)
+                .flatMap(questionTagsSet -> questionTagsSet.stream().distinct())
+                .collect(Collectors.toList());
     }
 }

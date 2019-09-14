@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/flashcard")
+@RequestMapping("/flashcards")
 public class FlashcardController {
     private FlashcardFacade flashcardFacade;
 
@@ -28,12 +28,13 @@ public class FlashcardController {
         return new ResponseEntity<>(flashcardFacade.updateFlashcard(flashcardSaveDto, id), HttpStatus.OK);
     }
 
-    @GetMapping(
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FlashcardGetDto>> getAllFlashcards(
-            @RequestParam(value = "searchPhrase", required = false)String searchPhrase) {
+            @RequestParam(value = "searchPhrase", required = false)String searchPhrase,
+            @RequestParam(value = "tagsList", required = false)List<String> tagsList
+            ) {
         Optional<String> searchPhraseOptional = Optional.ofNullable(searchPhrase);
-        return new ResponseEntity<>(flashcardFacade.getAllFlashcards(searchPhraseOptional), HttpStatus.OK);
+        Optional<List<String>> tagsListOptional = Optional.ofNullable(tagsList);
+        return new ResponseEntity<>(flashcardFacade.getFlashcards(searchPhraseOptional, tagsListOptional), HttpStatus.OK);
     }
-
 }

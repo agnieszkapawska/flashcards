@@ -89,12 +89,15 @@ public class FlashcardFacade {
         return uselessQuestionTags;
     }
 
-    public List<FlashcardGetDto> getAllFlashcards(Optional<String> searchPhrase) {
-        List<Flashcard> flashcards = new ArrayList<>();
+    public List<FlashcardGetDto> getFlashcards(Optional<String> searchPhrase, Optional<List<String>> tagsList) {
+        List<Flashcard> flashcards;
         if(searchPhrase.isPresent()) {
-            flashcards.addAll(flashcardService.findByPhrase(searchPhrase.get()));
-        } else {
-            flashcards.addAll(flashcardService.findAll());
+            flashcards = flashcardService.findByPhrase(searchPhrase.get());
+        } else if(tagsList.isPresent()) {
+            flashcards = questionTagService.findFlashcardsByTags(tagsList.get());
+        }
+        else {
+            flashcards = flashcardService.findAll();
         }
         return flashcards.stream()
                 .map(flashcard -> modelMapper.map(flashcard, FlashcardGetDto.class))
