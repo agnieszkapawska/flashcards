@@ -29,12 +29,17 @@ public class FlashcardController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<FlashcardGetResponseDto>> getAllFlashcards(
+    public ResponseEntity<List<FlashcardGetResponseDto>> getFlashcards(
             @RequestParam(value = "searchPhrase", required = false)String searchPhrase,
             @RequestParam(value = "tagsList", required = false)List<String> tagsList
             ) {
         Optional<String> searchPhraseOptional = Optional.ofNullable(searchPhrase);
         Optional<List<String>> tagsListOptional = Optional.ofNullable(tagsList);
         return new ResponseEntity<>(flashcardFacade.getFlashcards(searchPhraseOptional, tagsListOptional), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<FlashcardGetResponseDto> getFlashcardById(@PathVariable Long id) {
+        return new ResponseEntity<>(flashcardFacade.getFlashcardById(id), HttpStatus.OK);
     }
 }

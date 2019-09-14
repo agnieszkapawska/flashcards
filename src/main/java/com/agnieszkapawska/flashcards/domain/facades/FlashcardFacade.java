@@ -103,4 +103,8 @@ public class FlashcardFacade {
                 .map(flashcard -> modelMapper.map(flashcard, FlashcardGetResponseDto.class))
                 .collect(Collectors.toList());
     }
+
+    public FlashcardGetResponseDto getFlashcardById(Long id) {
+        return modelMapper.map(flashcardService.findById(id), FlashcardGetResponseDto.class);
+    }
 }
