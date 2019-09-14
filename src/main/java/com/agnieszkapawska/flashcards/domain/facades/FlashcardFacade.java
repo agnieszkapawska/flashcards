@@ -1,6 +1,6 @@
 package com.agnieszkapawska.flashcards.domain.facades;
 
-import com.agnieszkapawska.flashcards.domain.dtos.FlashcardGetDto;
+import com.agnieszkapawska.flashcards.domain.dtos.FlashcardGetResponseDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveResponseDto;
 import com.agnieszkapawska.flashcards.domain.exceptions.EntityNotCreatedException;
@@ -89,7 +89,7 @@ public class FlashcardFacade {
         return uselessQuestionTags;
     }
 
-    public List<FlashcardGetDto> getFlashcards(Optional<String> searchPhrase, Optional<List<String>> tagsList) {
+    public List<FlashcardGetResponseDto> getFlashcards(Optional<String> searchPhrase, Optional<List<String>> tagsList) {
         List<Flashcard> flashcards;
         if(searchPhrase.isPresent()) {
             flashcards = flashcardService.findByPhrase(searchPhrase.get());
@@ -100,7 +100,7 @@ public class FlashcardFacade {
             flashcards = flashcardService.findAll();
         }
         return flashcards.stream()
-                .map(flashcard -> modelMapper.map(flashcard, FlashcardGetDto.class))
+                .map(flashcard -> modelMapper.map(flashcard, FlashcardGetResponseDto.class))
                 .collect(Collectors.toList());
     }
 }

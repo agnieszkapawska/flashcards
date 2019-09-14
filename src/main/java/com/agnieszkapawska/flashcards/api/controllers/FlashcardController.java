@@ -1,6 +1,6 @@
 package com.agnieszkapawska.flashcards.api.controllers;
 
-import com.agnieszkapawska.flashcards.domain.dtos.FlashcardGetDto;
+import com.agnieszkapawska.flashcards.domain.dtos.FlashcardGetResponseDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveResponseDto;
 import com.agnieszkapawska.flashcards.domain.facades.FlashcardFacade;
@@ -29,7 +29,7 @@ public class FlashcardController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<FlashcardGetDto>> getAllFlashcards(
+    public ResponseEntity<List<FlashcardGetResponseDto>> getAllFlashcards(
             @RequestParam(value = "searchPhrase", required = false)String searchPhrase,
             @RequestParam(value = "tagsList", required = false)List<String> tagsList
             ) {

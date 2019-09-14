@@ -10,10 +10,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FlashcardGetDto {
+public class FlashcardGetResponseDto {
     private String question;
-    private String answer;
-    private String exampleUsage;
-    private String explanation;
-    private Set<QuestionTag> questionTagsSet;
+    private Long id;
 }
