@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -37,6 +34,13 @@ public class Flashcard {
         this.answer = answer;
     }
 
+    public void update(FlashcardSaveDto flashcardSaveDto) {
+        this.setQuestion(flashcardSaveDto.getQuestion());
+        this.setAnswer(flashcardSaveDto.getAnswer());
+        this.setExampleUsage(flashcardSaveDto.getExampleUsage());
+        this.setExplanation(flashcardSaveDto.getExplanation());
+    }
+
     @Override
     public String toString() {
         List<String> questionTagsNameSet = new ArrayList<>();
@@ -54,10 +58,21 @@ public class Flashcard {
                 '}';
     }
 
-    public void update(FlashcardSaveDto flashcardSaveDto) {
-        this.setQuestion(flashcardSaveDto.getQuestion());
-        this.setAnswer(flashcardSaveDto.getAnswer());
-        this.setExampleUsage(flashcardSaveDto.getExampleUsage());
-        this.setExplanation(flashcardSaveDto.getExplanation());
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Flashcard)) return false;
+        Flashcard flashcard = (Flashcard) o;
+        return Objects.equals(getId(), flashcard.getId()) &&
+                Objects.equals(getQuestion(), flashcard.getQuestion()) &&
+                Objects.equals(getAnswer(), flashcard.getAnswer()) &&
+                Objects.equals(getExampleUsage(), flashcard.getExampleUsage()) &&
+                Objects.equals(getExplanation(), flashcard.getExplanation()) &&
+                Objects.equals(getQuestionTagsSet(), flashcard.getQuestionTagsSet());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getQuestion());
     }
 }

@@ -7,10 +7,8 @@ import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
 import org.junit.Before;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public abstract class FlashcardAndQuestionTagAbstractTests extends FlashcardsApplicationAbstractTests {
@@ -18,21 +16,18 @@ public abstract class FlashcardAndQuestionTagAbstractTests extends FlashcardsApp
     protected FlashcardSaveResponseDto flashcardSaveResponseDto;
     protected QuestionTag questionTag;
 
-    @MockBean
-    protected FlashcardFacade flashcardFacade;
-
     @Before
     public void setUp(){
         super.setUp();
         flashcardSaveDto = new FlashcardSaveDto();
         flashcardSaveResponseDto = new FlashcardSaveResponseDto();
         flashcardSaveResponseDto.setId(3L);
-        questionTag = createQuestionTag();
+        questionTag = createQuestionTag(1L, "home");
     }
 
-    public QuestionTag createQuestionTag() {
-        QuestionTag questionTag = new QuestionTag("home");
-        questionTag.setId(1L);
+    public QuestionTag createQuestionTag(Long id, String name) {
+        QuestionTag questionTag = new QuestionTag(name);
+        questionTag.setId(id);
 
         Set<Flashcard> flashcardSet = new HashSet<>
                 (Arrays.asList(new Flashcard("dom", "home"), new Flashcard("wakacje", "holiday")));

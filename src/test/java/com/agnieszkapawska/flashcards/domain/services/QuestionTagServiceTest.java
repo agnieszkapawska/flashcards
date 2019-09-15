@@ -64,7 +64,7 @@ public class QuestionTagServiceTest extends FlashcardAndQuestionTagAbstractTests
     public void findFlashcardsByTags_ShouldReturnExpectedFlashcardList_WhenQuestionTagExist() {
         //given
         when(questionTagRepository.findByName(anyString()))
-                .thenReturn(Optional.of(super.createQuestionTag()));
+                .thenReturn(Optional.of(super.createQuestionTag(1l, "home")));
         //when
         List<Flashcard> flashcardsFoundByTags = questionTagService.findFlashcardsByTags(tagsNamesList);
         //then

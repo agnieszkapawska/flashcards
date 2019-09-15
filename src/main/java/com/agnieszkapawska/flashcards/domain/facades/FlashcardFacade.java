@@ -25,7 +25,7 @@ public class FlashcardFacade {
         Flashcard flashcard = modelMapper.map(flashcardSaveDto, Flashcard.class);
         try {
             Flashcard savedFlashcard = flashcardService.saveFlashcard(flashcard);
-            Set<QuestionTag> questionTagsSet = questionTagService.getQuestionTagsSet(flashcardSaveDto.getTagsList());
+            Set<QuestionTag> questionTagsSet = questionTagService.getQuestionTagsSet(flashcardSaveDto.getTagsSet());
             questionTagsSet.forEach(questionTag -> {
                 questionTag.getFlashcards().add(savedFlashcard);
             });
@@ -43,7 +43,7 @@ public class FlashcardFacade {
         Flashcard existingFlashcard = flashcardService.findById(id);
 
         CompareQuestionTagsSets tagsToUpdate =
-                new CompareQuestionTagsSets(existingFlashcard.getQuestionTagsSet(), flashcardSaveDto.getTagsList());
+                new CompareQuestionTagsSets(existingFlashcard.getQuestionTagsSet(), flashcardSaveDto.getTagsSet());
 
         Set<QuestionTag> questionTagsToAddSet = questionTagService.getQuestionTagsSet(tagsToUpdate.getTagsNamesToAdd());
         Set<QuestionTag> questionTagsToRemoveSet = questionTagService.getQuestionTagsSet(tagsToUpdate.getTagsNamesToRemove());
