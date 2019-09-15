@@ -15,7 +15,6 @@ final class AddFlashcardViewModel: Identifiable, ObservableObject {
     }
     @Published var presentingAlert = false
     var alertMessage = ""
-
     
     init(networking: NetworkingProtocol = Networking()) {
         self.networking = networking

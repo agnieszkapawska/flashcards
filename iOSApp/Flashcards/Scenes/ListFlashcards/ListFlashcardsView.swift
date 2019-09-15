@@ -7,7 +7,9 @@ struct ListFlashcardsView: View {
         NavigationView {
             VStack {
                 List(viewModel.flashcards) { flashcard in
-                    Text(flashcard.question)
+                    NavigationLink(destination: UpdateFlashcardView(flashcardId: flashcard.id)) {
+                        Text(flashcard.question)
+                    }
                 }
             }
             .navigationBarTitle("Flashcards")

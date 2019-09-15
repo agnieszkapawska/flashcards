@@ -35,3 +35,14 @@ final class ListFlashcardsViewModel: Identifiable, ObservableObject {
             .store(in: &disposables)
     }
 }
+
+extension ListFlashcard.Flashcard {
+    static var stub: [Self] {
+        return [
+        ListFlashcard.Flashcard(id: 0, question: "Krzyś"),
+        ListFlashcard.Flashcard(id: 1, question: "Agusia"),
+        ListFlashcard.Flashcard(id: 2, question: "Rudnik"),
+        ListFlashcard.Flashcard(id: 3, question: "Pierdziusia")
+        ]
+    }
+}
