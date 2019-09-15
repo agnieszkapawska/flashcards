@@ -61,7 +61,7 @@ public class QuestionTagServiceTest extends FlashcardAndQuestionTagAbstractTests
     }
 
     @Test
-    public void findFlashcardsByTags_shouldReturnExpectedFlashcardList_whenQuestionTagExist() {
+    public void findFlashcardsByTags_ShouldReturnExpectedFlashcardList_WhenQuestionTagExist() {
         //given
         when(questionTagRepository.findByName(anyString()))
                 .thenReturn(Optional.of(super.createQuestionTag()));
@@ -72,7 +72,7 @@ public class QuestionTagServiceTest extends FlashcardAndQuestionTagAbstractTests
     }
 
     @Test
-    public void findFlashcardsByTags_shouldReturnEmptyList_whenQuestionTagDoesNotExist() {
+    public void findFlashcardsByTags_ShouldReturnEmptyList_whenQuestionTagDoesNotExist() {
         //given
         when(questionTagRepository.findByName(anyString()))
                 .thenReturn(Optional.empty());
