@@ -32,6 +32,11 @@ public class Flashcard {
     @JsonManagedReference
     private Set<QuestionTag> questionTagsSet = new HashSet<>();
 
+    public Flashcard(String question, String answer) {
+        this.question = question;
+        this.answer = answer;
+    }
+
     @Override
     public String toString() {
         List<String> questionTagsNameSet = new ArrayList<>();
