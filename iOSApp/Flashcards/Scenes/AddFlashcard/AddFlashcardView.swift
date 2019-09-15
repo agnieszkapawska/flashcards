@@ -23,7 +23,9 @@ struct AddFlashcardView: View {
                 }
             }.navigationBarTitle("New flashcard")
              .alert(isPresented: $viewModel.presentingAlert) { () -> Alert in
-                Alert(title: Text("Message"), message: Text(viewModel.alertMessage), dismissButton: .default(Text("ok")))
+                Alert(title: Text("Message"),
+                      message: Text(viewModel.alertMessage),
+                      dismissButton: .default(Text("ok")))
              }
         }
     }
