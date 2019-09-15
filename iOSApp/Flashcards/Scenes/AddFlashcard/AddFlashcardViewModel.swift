@@ -21,7 +21,7 @@ final class AddFlashcardViewModel: Identifiable, ObservableObject {
     }
     
     func save() {
-        let request = AddFlashcard.Request(flashcard)
+        let request = AddFlashcard.Request(flashcard).anyRequest
         networking.execute(request)
             .receive(on: DispatchQueue.main)
             .sink(
@@ -34,7 +34,7 @@ final class AddFlashcardViewModel: Identifiable, ObservableObject {
                         break
                       }
                     },
-                    receiveValue: { (response: AddFlashcard.Response) in
+                    receiveValue: { _ in
                         self.alertMessage = "You got it right!"
                         self.presentingAlert = true
                   })

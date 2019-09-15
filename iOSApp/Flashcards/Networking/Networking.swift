@@ -7,11 +7,11 @@ enum NetworkingError: Error, Equatable {
 }
 
 protocol NetworkingProtocol {
-    func execute<ResponseType: Decodable>(_ request: Request) -> AnyPublisher<ResponseType, NetworkingError>
+    func execute<ResponseType: Decodable>(_ request: AnyRequest<ResponseType>) -> AnyPublisher<ResponseType, NetworkingError>
 }
 
 struct Networking: NetworkingProtocol {
-    func execute<ResponseType: Decodable>(_ request: Request) -> AnyPublisher<ResponseType, NetworkingError> {
+    func execute<ResponseType: Decodable>(_ request: AnyRequest<ResponseType>) -> AnyPublisher<ResponseType, NetworkingError> {
         
         var urlRequest = URLRequest(url: request.url)
         urlRequest.httpMethod = request.method

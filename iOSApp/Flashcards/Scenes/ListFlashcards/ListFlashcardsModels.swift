@@ -8,6 +8,7 @@ enum ListFlashcard {
     }
 
     struct Request: GetRequest {
+        typealias ResponseType = [Flashcard]
         let url = URL(string: "http://localhost:8080/flashcards")!
     }
 }

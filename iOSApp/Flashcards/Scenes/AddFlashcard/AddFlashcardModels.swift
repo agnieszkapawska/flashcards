@@ -11,6 +11,7 @@ enum AddFlashcard {
     }
 
     struct Request: PostRequest {
+        typealias ResponseType = Response
         let url = URL(string: "http://localhost:8080/flashcards")!
         let body: Data?
         

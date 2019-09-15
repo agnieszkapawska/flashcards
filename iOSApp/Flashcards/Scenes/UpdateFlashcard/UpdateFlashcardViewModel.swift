@@ -23,7 +23,7 @@ final class UpdateFlashcardViewModel: Identifiable, ObservableObject {
     }
     
     func load() {
-        let request = UpdateFlashcard.Get.Request(flashcardId)
+        let request = UpdateFlashcard.Get.Request(flashcardId).anyRequest
         networking.execute(request)
             .receive(on: DispatchQueue.main)
             .sink(
@@ -36,14 +36,14 @@ final class UpdateFlashcardViewModel: Identifiable, ObservableObject {
                         break
                       }
                     },
-                    receiveValue: { (response: UpdateFlashcard.Flashcard) in
+                    receiveValue: { response in
                         self.flashcard = response
                   })
             .store(in: &disposables)
     }
     
     func save() {
-        let request = UpdateFlashcard.Update.Request(flashcard)
+        let request = UpdateFlashcard.Update.Request(flashcard).anyRequest
         networking.execute(request)
             .receive(on: DispatchQueue.main)
             .sink(
@@ -56,7 +56,7 @@ final class UpdateFlashcardViewModel: Identifiable, ObservableObject {
                         break
                       }
                     },
-                    receiveValue: { (response: AddFlashcard.Response) in
+                    receiveValue: { _ in
                         self.alertMessage = "You got it right!"
                         self.presentingAlert = true
                   })

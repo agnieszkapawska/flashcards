@@ -14,6 +14,7 @@ enum UpdateFlashcard {
     enum Get {
 
         struct Request: GetRequest {
+            typealias ResponseType = Flashcard
             let url: URL
             
             init(_ flashcardId: Int) {
@@ -25,6 +26,7 @@ enum UpdateFlashcard {
     enum Update {
 
         struct Request: PostRequest {
+            typealias ResponseType = Response
             let url: URL
             let body: Data?
             

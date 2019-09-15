@@ -10,13 +10,12 @@ final class ListFlashcardsViewModel: Identifiable, ObservableObject {
     @Published var presentingAlert = false
     var alertMessage = ""
 
-    
     init(networking: NetworkingProtocol = Networking()) {
         self.networking = networking
     }
     
     func load() {
-        let request = ListFlashcard.Request()
+        let request = ListFlashcard.Request().anyRequest
         networking.execute(request)
             .receive(on: DispatchQueue.main)
             .sink(
@@ -29,7 +28,7 @@ final class ListFlashcardsViewModel: Identifiable, ObservableObject {
                         break
                       }
                     },
-                    receiveValue: { (response: [ListFlashcard.Flashcard]) in
+                    receiveValue: { response in
                         self.flashcards = response
                   })
             .store(in: &disposables)
