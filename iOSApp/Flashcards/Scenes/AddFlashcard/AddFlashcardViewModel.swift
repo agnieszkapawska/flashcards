@@ -36,7 +36,6 @@ final class AddFlashcardViewModel: Identifiable, ObservableObject {
                       }
                     },
                     receiveValue: { (response: AddFlashcard.Response) in
-                        print(response.id)
                         self.alertMessage = "You got it right!"
                         self.presentingAlert = true
                   })

@@ -22,4 +22,5 @@ protocol GetRequest: Request {
 
 extension GetRequest {
     var method: String { return "GET" }
+    var body: Data? { return nil }
 }

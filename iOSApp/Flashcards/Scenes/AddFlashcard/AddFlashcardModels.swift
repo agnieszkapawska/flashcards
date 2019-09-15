@@ -11,7 +11,7 @@ enum AddFlashcard {
     }
 
     struct Request: PostRequest {
-        let url = URL(string: "http://localhost:8080/flashcard")!
+        let url = URL(string: "http://localhost:8080/flashcards")!
         let body: Data?
         
         init(_ model: Flashcard) {
