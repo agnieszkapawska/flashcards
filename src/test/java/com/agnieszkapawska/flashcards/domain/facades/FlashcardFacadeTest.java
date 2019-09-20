@@ -8,6 +8,7 @@ import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
 import com.agnieszkapawska.flashcards.domain.services.QuestionTagService;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -22,6 +23,21 @@ public class FlashcardFacadeTest extends FlashcardAndQuestionTagAbstractTests {
     private FlashcardService flashcardService;
     @MockBean
     private QuestionTagService questionTagService;
+    private Flashcard flashcard;
+
+    @Before
+    public void createFlashcard() {
+        flashcard = new Flashcard();
+        flashcard.setId(1L);
+        flashcard.setQuestion("question");
+        flashcard.setAnswer("answer");
+        flashcard.setExplanation("explanation");
+        //questionTag with flashcards
+        QuestionTag questionTag = new QuestionTag();
+        questionTag.setName("home");
+        questionTag.setFlashcards(new HashSet<>(Collections.singletonList(new Flashcard("kubek", "mug"))));
+        flashcard.getQuestionTagsSet().add(questionTag);
+    }
 
     @Test
     public void saveFlashcard_ShouldReturnFlashcardSaveResponseDto() {
@@ -31,8 +47,6 @@ public class FlashcardFacadeTest extends FlashcardAndQuestionTagAbstractTests {
         Set<QuestionTag> questionTagSet = new HashSet<>(Arrays.asList(createQuestionTag(1L, "home"),
                 createQuestionTag(2L, "holiday")));
         flashcardSaveDto.setTagsSet(new HashSet<>(Arrays.asList("home", "holiday")));
-        Flashcard flashcard = new Flashcard("imie", "name");
-        flashcard.setId(1L);
 
         when(flashcardService.saveFlashcard(any(Flashcard.class)))
                 .thenReturn(flashcard);
@@ -53,13 +67,6 @@ public class FlashcardFacadeTest extends FlashcardAndQuestionTagAbstractTests {
     @Test
     public void whenUpdateFlashcard_ThenShouldInvokeDeleteUselessQuestionTagsInQuestionTagService_AndReturnExpectedFlashcardSaveResponseDto() {
         //given
-        Flashcard flashcard = new Flashcard();
-        flashcard.setId(1L);
-        flashcard.setQuestion("question");
-        flashcard.setAnswer("answer");
-        flashcard.setExplanation("explanation");
-        flashcard.setQuestionTagsSet(new HashSet<>(Collections.singletonList(new QuestionTag("home"))));
-
         when(flashcardService.findById(anyLong()))
                 .thenReturn(flashcard);
         when(questionTagService.getQuestionTagsSet(any()))
@@ -72,6 +79,26 @@ public class FlashcardFacadeTest extends FlashcardAndQuestionTagAbstractTests {
         //then
         Assert.assertSame(1L, flashcardSaveResponseDto.getId());
         verify(questionTagService, times(1)).deleteUselessQuestionTags(any(HashSet.class));
+    }
+
+    @Test
+    public void whenUpdateFlashcard_ThenShouldNotInvokeDeleteUselessQuestionTagsInQuestionTagService_AndReturnExpectedFlashcardSaveResponseDto() {
+        //given
+        //added question tag has two flashcards so shouldn't be remove
+        flashcard.getQuestionTagsSet().add(super.questionTag);
+
+        when(flashcardService.findById(anyLong()))
+                .thenReturn(flashcard);
+        when(questionTagService.getQuestionTagsSet(any()))
+                //question tag to add
+                .thenReturn(new HashSet<>())
+                //question tag to remove
+                .thenReturn(Collections.singleton(super.questionTag));
+        //when
+        FlashcardSaveResponseDto flashcardSaveResponseDto = flashcardFacade.updateFlashcard(super.flashcardSaveDto, 1L);
+        //then
+        Assert.assertSame(1L, flashcardSaveResponseDto.getId());
+        verify(questionTagService, never()).deleteUselessQuestionTags(any(HashSet.class));
     }
 
     @Test
