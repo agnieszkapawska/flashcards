@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class FlashcardFacadeTest extends FlashcardAndQuestionTagAbstractTests {
     @Autowired
@@ -51,7 +51,27 @@ public class FlashcardFacadeTest extends FlashcardAndQuestionTagAbstractTests {
     }
 
     @Test
-    public void updateFlashcard() {
+    public void whenUpdateFlashcard_ThenShouldInvokeDeleteUselessQuestionTagsInQuestionTagService_AndReturnExpectedFlashcardSaveResponseDto() {
+        //given
+        Flashcard flashcard = new Flashcard();
+        flashcard.setId(1L);
+        flashcard.setQuestion("question");
+        flashcard.setAnswer("answer");
+        flashcard.setExplanation("explanation");
+        flashcard.setQuestionTagsSet(new HashSet<>(Collections.singletonList(new QuestionTag("home"))));
+
+        when(flashcardService.findById(anyLong()))
+                .thenReturn(flashcard);
+        when(questionTagService.getQuestionTagsSet(any()))
+                //question tag to add
+                .thenReturn(new HashSet<>(Collections.singletonList(new QuestionTag("holiday"))))
+                //question tag to remove
+                .thenReturn(new HashSet<>(Collections.singletonList(new QuestionTag("home"))));
+        //when
+        FlashcardSaveResponseDto flashcardSaveResponseDto = flashcardFacade.updateFlashcard(super.flashcardSaveDto, 1L);
+        //then
+        Assert.assertSame(1L, flashcardSaveResponseDto.getId());
+        verify(questionTagService, times(1)).deleteUselessQuestionTags(any(HashSet.class));
     }
 
     @Test

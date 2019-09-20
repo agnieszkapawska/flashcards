@@ -61,18 +61,17 @@ public class Flashcard {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Flashcard)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Flashcard flashcard = (Flashcard) o;
-        return Objects.equals(getId(), flashcard.getId()) &&
-                Objects.equals(getQuestion(), flashcard.getQuestion()) &&
-                Objects.equals(getAnswer(), flashcard.getAnswer()) &&
-                Objects.equals(getExampleUsage(), flashcard.getExampleUsage()) &&
-                Objects.equals(getExplanation(), flashcard.getExplanation()) &&
-                Objects.equals(getQuestionTagsSet(), flashcard.getQuestionTagsSet());
+        return Objects.equals(id, flashcard.id) &&
+                Objects.equals(question, flashcard.question) &&
+                Objects.equals(answer, flashcard.answer) &&
+                Objects.equals(exampleUsage, flashcard.exampleUsage) &&
+                Objects.equals(explanation, flashcard.explanation);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getQuestion());
+        return Objects.hash(id, question, answer, exampleUsage);
     }
 }
