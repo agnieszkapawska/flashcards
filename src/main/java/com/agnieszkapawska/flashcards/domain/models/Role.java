@@ -2,7 +2,8 @@ package com.agnieszkapawska.flashcards.domain.models;
 
 import lombok.Data;
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -14,4 +15,5 @@ public class Role {
     private String name;
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
+
 }
