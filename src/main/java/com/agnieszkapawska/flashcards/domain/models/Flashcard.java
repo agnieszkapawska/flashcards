@@ -54,7 +54,7 @@ public class Flashcard {
                 ", answer='" + answer + '\'' +
                 ", exampleUsage='" + exampleUsage + '\'' +
                 ", explanation='" + explanation + '\'' +
-                ", questionTagsSet=" + questionTagsNameSet.toString() +
+                ", tagsSet=" + questionTagsNameSet.toString() +
                 '}';
     }
 
