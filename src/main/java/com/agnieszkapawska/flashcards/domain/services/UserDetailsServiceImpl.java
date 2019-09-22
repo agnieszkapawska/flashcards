@@ -23,8 +23,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new EntityCouldNotBeFoundException(userName + "couldn't be found"));
 
         Set grantedAuthorities = new HashSet();
-        user.getRoles().forEach(role -> grantedAuthorities.add(new SimpleGrantedAuthority(role.getName())));
-
+        //user.getRoles().forEach(role -> grantedAuthorities.add(new SimpleGrantedAuthority(role.getName())));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), grantedAuthorities);
     }
 }

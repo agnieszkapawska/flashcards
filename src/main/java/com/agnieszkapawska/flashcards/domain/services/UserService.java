@@ -1,11 +1,8 @@
 package com.agnieszkapawska.flashcards.domain.services;
 
-import com.agnieszkapawska.flashcards.domain.repositories.UserRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.agnieszkapawska.flashcards.domain.models.User;
 
-@AllArgsConstructor
-public class UserService {
-    private UserRepository userRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+public interface UserService {
+    void save(User user);
+    User findByUsername(String username);
 }

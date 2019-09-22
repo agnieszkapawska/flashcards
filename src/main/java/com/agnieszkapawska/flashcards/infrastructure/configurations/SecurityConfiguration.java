@@ -1,9 +1,10 @@
 package com.agnieszkapawska.flashcards.infrastructure.configurations;
 
+import com.agnieszkapawska.flashcards.domain.repositories.RoleRepository;
 import com.agnieszkapawska.flashcards.domain.repositories.UserRepository;
 import com.agnieszkapawska.flashcards.domain.services.SecurityServiceImpl;
 import com.agnieszkapawska.flashcards.domain.services.UserDetailsServiceImpl;
-import com.agnieszkapawska.flashcards.domain.services.UserService;
+import com.agnieszkapawska.flashcards.domain.services.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -32,8 +33,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    UserService userService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        return new UserService(userRepository, bCryptPasswordEncoder);
+    UserServiceImpl userService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        return new UserServiceImpl(userRepository, roleRepository, bCryptPasswordEncoder);
     }
 
     @Bean
