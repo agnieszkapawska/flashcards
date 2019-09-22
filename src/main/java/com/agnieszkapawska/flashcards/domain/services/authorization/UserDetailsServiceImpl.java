@@ -22,9 +22,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findByUserName(userName)
                 .orElseThrow(() -> new EntityCouldNotBeFoundException(userName + "couldn't be found"));
 
+        boolean enabled = true;
+        boolean accountNonExpired = true;
+        boolean credentialsNonExpired = true;
+        boolean accountNonLocked = true;
+
         Set grantedAuthorities = new HashSet();
         //user.getRoles().forEach(role -> grantedAuthorities.add(new SimpleGrantedAuthority(role.getName())));
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(user.getUserName(),
+        user.getPassword(), enabled, accountNonExpired,
+                credentialsNonExpired, accountNonLocked, grantedAuthorities);
     }
 }
