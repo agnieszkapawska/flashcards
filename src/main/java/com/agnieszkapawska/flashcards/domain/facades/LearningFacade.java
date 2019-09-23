@@ -3,14 +3,15 @@ package com.agnieszkapawska.flashcards.domain.facades;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardGetResponseDto;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import com.agnieszkapawska.flashcards.domain.models.FlashcardsToLearn;
+import com.agnieszkapawska.flashcards.domain.models.FlashcardsToRepeat;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardsToRepeatService;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardsToLearnService;
 import com.agnieszkapawska.flashcards.domain.utils.Answer;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -35,14 +36,30 @@ public class LearningFacade {
                 flashcard.setCorrectAnswerCounter(flashcard.getCorrectAnswerCounter() + 1);
             } else {
                 FlashcardsToLearn flashcardsToLearn = flashcardsToLearnService.findByUserId(Long.parseLong(answer.getUserId()));
-                flashcardsToLearn.getFlashcards().remove(flashcard);
-                flashcardsToLearnService.save(flashcardsToLearn);
-                flashcard.setCorrectAnswerCounter(0);
-                flashcard.setFlashcardsToLearn(null);
+                moveFlashcardFromFlashcardsToLearnToFlashcardsToRepeat(answer, flashcard, flashcardsToLearn);
             }
         } else {
             flashcard.setCorrectAnswerCounter(0);
         }
         flashcardService.saveFlashcard(flashcard);
+    }
+
+    private void moveFlashcardFromFlashcardsToLearnToFlashcardsToRepeat(Answer answer, Flashcard flashcard, FlashcardsToLearn flashcardsToLearn) {
+        flashcardsToLearn.getFlashcards().remove(flashcard);
+        flashcardsToLearnService.save(flashcardsToLearn);
+
+        flashcard.setCorrectAnswerCounter(0);
+        flashcard.setFlashcardsToLearn(null);
+
+        FlashcardsToRepeat flashcardsToRepeat = flashcardsToRepeatService.findByUserId(Long.parseLong(answer.getUserId()))
+                .orElse(new FlashcardsToRepeat(flashcard.getUser()));
+        Optional<Set<Flashcard>> flashcardsOptional = Optional.ofNullable(flashcardsToRepeat.getFlashcards());
+        Set<Flashcard> flashcards = flashcardsOptional.orElse(new HashSet<>());
+
+        flashcards.add(flashcard);
+        flashcardsToRepeat.setFlashcards(flashcards);
+
+        flashcard.setFlashcardsToRepeat(flashcardsToRepeat);
+        flashcardsToRepeatService.save(flashcardsToRepeat);
     }
 }

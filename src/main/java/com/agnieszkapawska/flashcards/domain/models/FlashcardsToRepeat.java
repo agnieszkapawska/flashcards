@@ -19,4 +19,8 @@ public class FlashcardsToRepeat {
     private User user;
     @OneToMany(mappedBy = "flashcardsToRepeat")
     private Set<Flashcard> flashcards;
+
+    public FlashcardsToRepeat(User user) {
+        this.user = user;
+    }
 }
