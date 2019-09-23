@@ -31,4 +31,9 @@ public class FlashcardService {
                 .ifPresent(flashcards -> flashcardsContainsSearchPhrase.addAll(flashcards));
         return flashcardsContainsSearchPhrase;
     }
+
+    public List<Flashcard> findFlashcardsToLearnByUserId(Long userId) {
+
+        return null;
+    }
 }

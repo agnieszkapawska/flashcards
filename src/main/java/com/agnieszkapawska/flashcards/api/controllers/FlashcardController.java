@@ -42,4 +42,9 @@ public class FlashcardController {
     public ResponseEntity<FlashcardGetResponseDto> getFlashcardById(@PathVariable Long id) {
         return new ResponseEntity<>(flashcardFacade.getFlashcardById(id), HttpStatus.OK);
     }
+
+    @GetMapping("/learn")
+    public ResponseEntity<List<FlashcardGetResponseDto>> getFlashcardsToLearnByUserId(@RequestParam(value = "userId")Long userId) {
+        return new ResponseEntity<>(flashcardFacade.getFlashcardsToLearnByUserId(userId), HttpStatus.OK);
+    }
 }
