@@ -7,5 +7,6 @@ import java.util.Set;
 public interface UserService {
     void save(User user, Set<String> roles);
     User findByUsername(String username);
+    User findById(Long id);
     Optional<User> confirmCredentials(String username, String password);
 }

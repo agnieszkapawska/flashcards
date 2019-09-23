@@ -42,6 +42,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new EntityCouldNotBeFoundException("User wit id: " + id + "couldn't be found"));
+    }
+
+    @Override
     public Optional<User> confirmCredentials(String username, String password) {
         User user =
                 userRepository.findByUserName(username).orElseThrow(() -> new EntityCouldNotBeFoundException(username + " couldn't be found"));
