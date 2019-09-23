@@ -31,6 +31,8 @@ public class User {
     private Set<Role> roles = new HashSet<>();
     @OneToMany(mappedBy = "user")
     private Set<Flashcard> flashcards = new HashSet<>();
+    @OneToOne(mappedBy = "user")
+    private FlashcardsToLearn flashcardsToLearn;
 
     public User(Long id) {
         this.id = id;
