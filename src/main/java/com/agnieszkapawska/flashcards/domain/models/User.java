@@ -33,6 +33,8 @@ public class User {
     private Set<Flashcard> flashcards = new HashSet<>();
     @OneToOne(mappedBy = "user")
     private FlashcardsToLearn flashcardsToLearn;
+    @OneToOne(mappedBy = "user")
+    private FlashcardsToRepeat flashcardsToRepeat;
 
     public User(Long id) {
         this.id = id;

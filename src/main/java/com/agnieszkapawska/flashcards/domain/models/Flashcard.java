@@ -34,6 +34,9 @@ public class Flashcard {
     @OneToOne
     @JoinColumn(name = "flashcardsToLearn_id")
     private FlashcardsToLearn flashcardsToLearn;
+    @OneToOne
+    @JoinColumn(name = "flashcardsToRepeat_id")
+    private FlashcardsToRepeat flashcardsToRepeat;
 
     public Flashcard(String question, String answer) {
         this.question = question;

@@ -4,6 +4,7 @@ import com.agnieszkapawska.flashcards.domain.dtos.FlashcardGetResponseDto;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import com.agnieszkapawska.flashcards.domain.models.FlashcardsToLearn;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
+import com.agnieszkapawska.flashcards.domain.services.FlashcardsToRepeatService;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardsToLearnService;
 import com.agnieszkapawska.flashcards.domain.utils.Answer;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 public class LearningFacade {
     private FlashcardsToLearnService flashcardsToLearnService;
     private FlashcardService flashcardService;
+    private FlashcardsToRepeatService flashcardsToRepeatService;
     private ModelMapper modelMapper;
 
     public List<FlashcardGetResponseDto> getFlashcardsToLearnByUserId(Long userId) {
