@@ -4,9 +4,11 @@ import com.agnieszkapawska.flashcards.FlashcardAndQuestionTagAbstractTests;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveResponseDto;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
+import com.agnieszkapawska.flashcards.domain.models.FlashcardsToLearn;
 import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
 import com.agnieszkapawska.flashcards.domain.models.User;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
+import com.agnieszkapawska.flashcards.domain.services.FlashcardsToLearnService;
 import com.agnieszkapawska.flashcards.domain.services.QuestionTagService;
 import com.agnieszkapawska.flashcards.domain.services.authorization.UserService;
 import org.junit.Assert;
@@ -27,6 +29,8 @@ public class FlashcardFacadeTest extends FlashcardAndQuestionTagAbstractTests {
     private QuestionTagService questionTagService;
     @MockBean
     private UserService userService;
+    @MockBean
+    private FlashcardsToLearnService flashcardsToLearnService;
     private Flashcard flashcard;
 
     @Before
@@ -54,6 +58,8 @@ public class FlashcardFacadeTest extends FlashcardAndQuestionTagAbstractTests {
         flashcardSaveDto.setUserId("1");
         when(userService.findById(anyLong()))
                 .thenReturn(new User(1L ));
+        when(flashcardsToLearnService.findByUserId(anyLong()))
+                .thenReturn(new FlashcardsToLearn());
         when(flashcardService.saveFlashcard(any(Flashcard.class)))
                 .thenReturn(flashcard);
         when(questionTagService.getQuestionTagsSet(anySet()))

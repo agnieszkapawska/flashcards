@@ -122,12 +122,4 @@ public class FlashcardFacade {
     public FlashcardGetResponseDto getFlashcardById(Long id) {
         return modelMapper.map(flashcardService.findById(id), FlashcardGetResponseDto.class);
     }
-
-    public List<FlashcardGetResponseDto> getFlashcardsToLearnByUserId(Long userId) {
-        FlashcardsToLearn flashcardsToLearn = flashcardsToLearnService.findByUserId(userId);
-        ArrayList<Flashcard> flashcards = new ArrayList<>(flashcardsToLearn.getFlashcards());
-        return flashcards.stream()
-                .map(flashcard -> modelMapper.map(flashcard, FlashcardGetResponseDto.class))
-                .collect(Collectors.toList());
-    }
 }
