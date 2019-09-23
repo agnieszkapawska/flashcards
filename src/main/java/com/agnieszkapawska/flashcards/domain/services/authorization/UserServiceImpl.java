@@ -42,10 +42,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean confirmCredentials(String username, String password) {
+    public Optional<User> confirmCredentials(String username, String password) {
         User user =
                 userRepository.findByUserName(username).orElseThrow(() -> new EntityCouldNotBeFoundException(username + " couldn't be found"));
-        return user.getPassword().equals(password);
+
+        return bCryptPasswordEncoder.matches(password, user.getPassword())? Optional.of(user):Optional.empty();
     }
 
     private Set<Role> getRoles(Set<String> rolesNames) {

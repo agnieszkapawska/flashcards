@@ -17,4 +17,9 @@ public class UserFacade {
         userService.save(user, userSaveDto.getRoles());
         return modelMapper.map(user, UserSaveResponseDto.class);
     }
+
+    public UserSaveResponseDto login(String username, String password) {
+        User user = userService.confirmCredentials(username, password).orElse(new User());
+        return modelMapper.map(user, UserSaveResponseDto.class);
+    }
 }
