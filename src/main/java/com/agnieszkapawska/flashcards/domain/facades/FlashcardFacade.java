@@ -8,6 +8,7 @@ import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
 import com.agnieszkapawska.flashcards.domain.models.User;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
+import com.agnieszkapawska.flashcards.domain.services.FlashcardsToLearnService;
 import com.agnieszkapawska.flashcards.domain.services.QuestionTagService;
 import com.agnieszkapawska.flashcards.domain.services.authorization.UserService;
 import com.agnieszkapawska.flashcards.domain.utils.CompareQuestionTagsSets;
@@ -22,6 +23,7 @@ public class FlashcardFacade {
     private FlashcardService flashcardService;
     private QuestionTagService questionTagService;
     private UserService userService;
+    private FlashcardsToLearnService flashcardsToLearnService;
     private ModelMapper modelMapper;
 
     public FlashcardSaveResponseDto saveFlashcard(FlashcardSaveDto flashcardSaveDto) {
@@ -29,6 +31,7 @@ public class FlashcardFacade {
         if(!flashcardSaveDto.getUserId().isEmpty()) {
             User user = userService.findById(Long.parseLong(flashcardSaveDto.getUserId()));
             flashcard.setUser(user);
+            flashcard.setFlashcardsToLearn(flashcardsToLearnService.findByUserId(user.getId()));
         } else {
             throw new EntityNotCreatedException("User id can't be empty ");
         }

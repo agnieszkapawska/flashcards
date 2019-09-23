@@ -4,6 +4,7 @@ import com.agnieszkapawska.flashcards.domain.facades.FlashcardFacade;
 import com.agnieszkapawska.flashcards.domain.repositories.FlashcardRepository;
 import com.agnieszkapawska.flashcards.domain.repositories.QuestionTagRepository;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
+import com.agnieszkapawska.flashcards.domain.services.FlashcardsToLearnService;
 import com.agnieszkapawska.flashcards.domain.services.QuestionTagService;
 import com.agnieszkapawska.flashcards.domain.services.authorization.UserService;
 import org.modelmapper.ModelMapper;
@@ -17,8 +18,12 @@ public class FlashcardConfiguration {
 
     @Bean
     public FlashcardFacade flashcardFacade(
-            FlashcardService flashcardService, QuestionTagService questionTagService, UserService userService, ModelMapper modelMapper) {
-        return new FlashcardFacade(flashcardService, questionTagService,userService, modelMapper);
+            FlashcardService flashcardService,
+            QuestionTagService questionTagService,
+            UserService userService,
+            FlashcardsToLearnService flashcardsToLearnService,
+            ModelMapper modelMapper) {
+        return new FlashcardFacade(flashcardService, questionTagService,userService, flashcardsToLearnService, modelMapper);
     }
 
     @Bean

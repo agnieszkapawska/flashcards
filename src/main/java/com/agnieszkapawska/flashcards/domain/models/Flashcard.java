@@ -20,6 +20,7 @@ public class Flashcard {
     private String answer;
     private String exampleUsage;
     private String explanation;
+    private int correctAnswerCounter;
     @ManyToMany
     @JoinTable(
             name = "Flashcard_QuestionTag",
