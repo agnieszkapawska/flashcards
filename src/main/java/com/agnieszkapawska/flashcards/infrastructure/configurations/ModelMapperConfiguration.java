@@ -3,7 +3,6 @@ package com.agnieszkapawska.flashcards.infrastructure.configurations;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.modelmapper.TypeMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

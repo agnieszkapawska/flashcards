@@ -1,8 +1,8 @@
 package com.agnieszkapawska.flashcards.infrastructure.configurations;
 
-import com.agnieszkapawska.flashcards.api.controllers.LearningController;
 import com.agnieszkapawska.flashcards.domain.facades.LearningFacade;
 import com.agnieszkapawska.flashcards.domain.repositories.FlashcardsToLearnRepository;
+import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardsToLearnService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +16,7 @@ public class FlashcardsStorageConfiguration {
     }
 
     @Bean
-    LearningFacade learningFacade(FlashcardsToLearnService flashcardsToLearnService, ModelMapper modelMapper) {
-        return new LearningFacade(flashcardsToLearnService, modelMapper);
+    LearningFacade learningFacade(FlashcardsToLearnService flashcardsToLearnService, FlashcardService flashcardService, ModelMapper modelMapper) {
+        return new LearningFacade(flashcardsToLearnService, flashcardService, modelMapper);
     }
 }

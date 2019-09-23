@@ -1,6 +1,5 @@
 package com.agnieszkapawska.flashcards.api.controllers;
 
-import com.agnieszkapawska.flashcards.domain.dtos.UserLoginDto;
 import com.agnieszkapawska.flashcards.domain.dtos.UserSaveDto;
 import com.agnieszkapawska.flashcards.domain.dtos.UserSaveResponseDto;
 import com.agnieszkapawska.flashcards.domain.facades.UserFacade;

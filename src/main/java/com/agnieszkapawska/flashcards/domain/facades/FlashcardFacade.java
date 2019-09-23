@@ -5,7 +5,6 @@ import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveResponseDto;
 import com.agnieszkapawska.flashcards.domain.exceptions.EntityNotCreatedException;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
-import com.agnieszkapawska.flashcards.domain.models.FlashcardsToLearn;
 import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
 import com.agnieszkapawska.flashcards.domain.models.User;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
@@ -16,9 +15,10 @@ import com.agnieszkapawska.flashcards.domain.utils.CompareQuestionTagsSets;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
