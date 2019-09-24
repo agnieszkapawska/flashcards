@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F121D03232E7C00003D0215 /* ListFlashcardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F121D02232E7C00003D0215 /* ListFlashcardsView.swift */; };
+		3F121D05232E7C10003D0215 /* ListFlashcardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F121D04232E7C10003D0215 /* ListFlashcardsViewModel.swift */; };
+		3F121D07232E7C1F003D0215 /* ListFlashcardsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F121D06232E7C1F003D0215 /* ListFlashcardsModels.swift */; };
+		3F121D0C232EAD38003D0215 /* UpdateFlashcardModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F121D09232EAD38003D0215 /* UpdateFlashcardModels.swift */; };
+		3F121D0D232EAD38003D0215 /* UpdateFlashcardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F121D0A232EAD38003D0215 /* UpdateFlashcardView.swift */; };
+		3F121D0E232EAD38003D0215 /* UpdateFlashcardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F121D0B232EAD38003D0215 /* UpdateFlashcardViewModel.swift */; };
 		3F77D2CA2329782900980A52 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F77D2C92329782900980A52 /* Networking.swift */; };
 		3F9C61ED2323E84600B88D79 /* AddFlashcardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9C61EC2323E84600B88D79 /* AddFlashcardViewModel.swift */; };
 		3FD0AC71231EE3F60081549B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD0AC70231EE3F60081549B /* AppDelegate.swift */; };
@@ -41,6 +47,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F121D02232E7C00003D0215 /* ListFlashcardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFlashcardsView.swift; sourceTree = "<group>"; };
+		3F121D04232E7C10003D0215 /* ListFlashcardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFlashcardsViewModel.swift; sourceTree = "<group>"; };
+		3F121D06232E7C1F003D0215 /* ListFlashcardsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFlashcardsModels.swift; sourceTree = "<group>"; };
+		3F121D09232EAD38003D0215 /* UpdateFlashcardModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateFlashcardModels.swift; sourceTree = "<group>"; };
+		3F121D0A232EAD38003D0215 /* UpdateFlashcardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateFlashcardView.swift; sourceTree = "<group>"; };
+		3F121D0B232EAD38003D0215 /* UpdateFlashcardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateFlashcardViewModel.swift; sourceTree = "<group>"; };
 		3F77D2C92329782900980A52 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		3F9C61EC2323E84600B88D79 /* AddFlashcardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFlashcardViewModel.swift; sourceTree = "<group>"; };
 		3FD0AC6D231EE3F60081549B /* Flashcards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flashcards.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +100,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F121D01232E7BBF003D0215 /* ListFlashcards */ = {
+			isa = PBXGroup;
+			children = (
+				3F121D02232E7C00003D0215 /* ListFlashcardsView.swift */,
+				3F121D04232E7C10003D0215 /* ListFlashcardsViewModel.swift */,
+				3F121D06232E7C1F003D0215 /* ListFlashcardsModels.swift */,
+			);
+			path = ListFlashcards;
+			sourceTree = "<group>";
+		};
+		3F121D08232EACF3003D0215 /* UpdateFlashcard */ = {
+			isa = PBXGroup;
+			children = (
+				3F121D09232EAD38003D0215 /* UpdateFlashcardModels.swift */,
+				3F121D0A232EAD38003D0215 /* UpdateFlashcardView.swift */,
+				3F121D0B232EAD38003D0215 /* UpdateFlashcardViewModel.swift */,
+			);
+			path = UpdateFlashcard;
+			sourceTree = "<group>";
+		};
 		3F77D2C82329781A00980A52 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,7 +195,9 @@
 		3FFD95C4232AC9E300646F19 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				3F121D01232E7BBF003D0215 /* ListFlashcards */,
 				3FFD95C5232AC9EB00646F19 /* AddFlashcard */,
+				3F121D08232EACF3003D0215 /* UpdateFlashcard */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -312,11 +346,17 @@
 				3FD0AC71231EE3F60081549B /* AppDelegate.swift in Sources */,
 				3FFD95C3232AC91000646F19 /* Encodable+encode.swift in Sources */,
 				3F77D2CA2329782900980A52 /* Networking.swift in Sources */,
+				3F121D03232E7C00003D0215 /* ListFlashcardsView.swift in Sources */,
+				3F121D0C232EAD38003D0215 /* UpdateFlashcardModels.swift in Sources */,
 				3FD0AC73231EE3F60081549B /* SceneDelegate.swift in Sources */,
 				3FFD95C1232AC8F700646F19 /* Decodable+decode.swift in Sources */,
 				3FFD95B9232AC53F00646F19 /* AddFlashcardModels.swift in Sources */,
+				3F121D0E232EAD38003D0215 /* UpdateFlashcardViewModel.swift in Sources */,
+				3F121D0D232EAD38003D0215 /* UpdateFlashcardView.swift in Sources */,
 				3FFD95BC232AC83200646F19 /* Request.swift in Sources */,
+				3F121D07232E7C1F003D0215 /* ListFlashcardsModels.swift in Sources */,
 				3FD0AC75231EE3F60081549B /* AddFlashcardView.swift in Sources */,
+				3F121D05232E7C10003D0215 /* ListFlashcardsViewModel.swift in Sources */,
 				3F9C61ED2323E84600B88D79 /* AddFlashcardViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
