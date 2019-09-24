@@ -34,7 +34,6 @@ public class FlashcardFacade {
         if(!flashcardSaveDto.getUserId().isEmpty()) {
             User user = userService.findById(Long.parseLong(flashcardSaveDto.getUserId()));
             flashcard.setUser(user);
-            flashcard.setFlashcardsToLearn(flashcardsToLearnService.findByUserId(user.getId()));
         } else {
             throw new EntityNotCreatedException("User id can't be empty ");
         }

@@ -2,7 +2,6 @@ package com.agnieszkapawska.flashcards.domain.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -17,7 +16,8 @@ public class FlashcardsToLearn {
     @OneToOne
     @JoinColumn(unique = true)
     private User user;
-    @OneToMany(mappedBy = "flashcardsToLearn")
+    @OneToMany
+    @JoinColumn(name = "flashcardsToLearn_id")
     private Set<Flashcard> flashcards;
 
     public FlashcardsToLearn(User user) {

@@ -49,7 +49,6 @@ public class LearningFacade {
         flashcardsToLearnService.save(flashcardsToLearn);
 
         flashcard.setCorrectAnswerCounter(0);
-        flashcard.setFlashcardsToLearn(null);
 
         FlashcardsToRepeat flashcardsToRepeat = flashcardsToRepeatService.findByUserId(Long.parseLong(answer.getUserId()))
                 .orElse(new FlashcardsToRepeat(flashcard.getUser()));
@@ -59,7 +58,6 @@ public class LearningFacade {
         flashcards.add(flashcard);
         flashcardsToRepeat.setFlashcards(flashcards);
 
-        flashcard.setFlashcardsToRepeat(flashcardsToRepeat);
         flashcardsToRepeatService.save(flashcardsToRepeat);
     }
 }

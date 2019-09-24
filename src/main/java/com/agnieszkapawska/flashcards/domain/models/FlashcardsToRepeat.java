@@ -17,7 +17,8 @@ public class FlashcardsToRepeat {
     @OneToOne
     @JoinColumn(unique = true)
     private User user;
-    @OneToMany(mappedBy = "flashcardsToRepeat")
+    @OneToMany
+    @JoinColumn(name = "flashcardsToRepeat_id")
     private Set<Flashcard> flashcards;
 
     public FlashcardsToRepeat(User user) {
