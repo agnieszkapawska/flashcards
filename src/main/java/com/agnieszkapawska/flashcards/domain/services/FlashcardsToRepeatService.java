@@ -19,4 +19,8 @@ public class FlashcardsToRepeatService implements FlashcardsStorageService {
     public Optional<FlashcardsToRepeat> findByUserId(Long userId) {
         return flashcardsToRepeatRepository.findByUserId(userId);
     }
+
+    public Optional<FlashcardsToRepeat> returnFlashcardToLearnWhenContainsFlashcardWithId(Long flashcardId) {
+        return flashcardsToRepeatRepository.findByFlashcardsId(flashcardId);
+    }
 }

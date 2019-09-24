@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface FlashcardsToRepeatRepository extends JpaRepository<FlashcardsToRepeat, Long> {
     Optional<FlashcardsToRepeat> findByUserId(Long userId);
+    Optional<FlashcardsToRepeat> findByFlashcardsId(Long flashcardId);
 }

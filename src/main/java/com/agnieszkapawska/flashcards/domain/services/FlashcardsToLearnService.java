@@ -4,7 +4,6 @@ import com.agnieszkapawska.flashcards.domain.exceptions.EntityCouldNotBeFoundExc
 import com.agnieszkapawska.flashcards.domain.models.FlashcardsToLearn;
 import com.agnieszkapawska.flashcards.domain.repositories.FlashcardsToLearnRepository;
 import lombok.AllArgsConstructor;
-
 import java.util.Optional;
 
 @AllArgsConstructor

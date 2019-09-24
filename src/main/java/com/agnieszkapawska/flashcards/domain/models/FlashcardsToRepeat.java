@@ -2,7 +2,6 @@ package com.agnieszkapawska.flashcards.domain.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.Set;
 

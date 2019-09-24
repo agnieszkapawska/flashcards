@@ -1,11 +1,12 @@
 package com.agnieszkapawska.flashcards.infrastructure.configurations;
 
 import com.agnieszkapawska.flashcards.domain.facades.LearningFacade;
-//import com.agnieszkapawska.flashcards.domain.facades.RepeatingFacade;
 import com.agnieszkapawska.flashcards.domain.repositories.FlashcardsToLearnRepository;
+import com.agnieszkapawska.flashcards.domain.repositories.FlashcardsToRefreshRepository;
 import com.agnieszkapawska.flashcards.domain.repositories.FlashcardsToRepeatRepository;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardsToLearnService;
+import com.agnieszkapawska.flashcards.domain.services.FlashcardsToRefreshService;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardsToRepeatService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -23,8 +24,9 @@ public class FlashcardsStorageConfiguration {
             FlashcardsToLearnService flashcardsToLearnService,
             FlashcardService flashcardService,
             FlashcardsToRepeatService flashcardsToRepeatService,
+            FlashcardsToRefreshService flashcardsToRefreshService,
             ModelMapper modelMapper) {
-        return new LearningFacade(flashcardsToLearnService, flashcardService, flashcardsToRepeatService, modelMapper);
+        return new LearningFacade(flashcardsToLearnService, flashcardService, flashcardsToRepeatService, flashcardsToRefreshService, modelMapper);
     }
 
     @Bean
@@ -32,8 +34,9 @@ public class FlashcardsStorageConfiguration {
         return new FlashcardsToRepeatService(flashcardsToRepeatRepository);
     }
 
-//    @Bean
-//    RepeatingFacade repeatingFacade(FlashcardsToRepeatService flashcardsToRepeatService) {
-//        return new RepeatingFacade(flashcardsToRepeatService);
-//    }
+    @Bean
+    FlashcardsToRefreshService flashcardsToRefreshService(FlashcardsToRefreshRepository flashcardsToRefreshService) {
+        return new FlashcardsToRefreshService(flashcardsToRefreshService);
+    }
+
 }
