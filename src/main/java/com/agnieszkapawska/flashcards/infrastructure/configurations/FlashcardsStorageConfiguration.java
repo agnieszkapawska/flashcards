@@ -1,6 +1,7 @@
 package com.agnieszkapawska.flashcards.infrastructure.configurations;
 
 import com.agnieszkapawska.flashcards.domain.facades.LearningFacade;
+//import com.agnieszkapawska.flashcards.domain.facades.RepeatingFacade;
 import com.agnieszkapawska.flashcards.domain.repositories.FlashcardsToLearnRepository;
 import com.agnieszkapawska.flashcards.domain.repositories.FlashcardsToRepeatRepository;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
@@ -30,4 +31,9 @@ public class FlashcardsStorageConfiguration {
     FlashcardsToRepeatService flashcardToRepeatService(FlashcardsToRepeatRepository flashcardsToRepeatRepository) {
         return new FlashcardsToRepeatService(flashcardsToRepeatRepository);
     }
+
+//    @Bean
+//    RepeatingFacade repeatingFacade(FlashcardsToRepeatService flashcardsToRepeatService) {
+//        return new RepeatingFacade(flashcardsToRepeatService);
+//    }
 }

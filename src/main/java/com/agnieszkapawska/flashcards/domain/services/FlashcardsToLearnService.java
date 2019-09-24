@@ -5,6 +5,8 @@ import com.agnieszkapawska.flashcards.domain.models.FlashcardsToLearn;
 import com.agnieszkapawska.flashcards.domain.repositories.FlashcardsToLearnRepository;
 import lombok.AllArgsConstructor;
 
+import java.util.Optional;
+
 @AllArgsConstructor
 public class FlashcardsToLearnService implements FlashcardsStorageService {
     private FlashcardsToLearnRepository flashcardsToLearnRepository;
@@ -17,5 +19,9 @@ public class FlashcardsToLearnService implements FlashcardsStorageService {
         return flashcardsToLearnRepository.findByUserId(userId).orElseThrow(
                 () -> new EntityCouldNotBeFoundException("User wit id: " + userId + " couldn't be found")
         );
+    }
+
+    public Optional<FlashcardsToLearn> returnFlashcardToLearnWhenContainsFlashcardWithId(Long flashcardId) {
+        return flashcardsToLearnRepository.findByFlashcardsId(flashcardId);
     }
 }

@@ -30,18 +30,29 @@ public class LearningFacade {
     }
 
     public void markAnswer(Answer answer) {
+        Long flashcardId = Long.parseLong(answer.getFlashcardId());
+        Long userId = Long.parseLong(answer.getUserId());
+        Optional.ofNullable(flashcardsToLearnService.returnFlashcardToLearnWhenContainsFlashcardWithId(flashcardId))
+                .ifPresent(flashcardsToLearn -> markAnswerIfFlashcardIsToLearn(answer, flashcardsToLearn.get()));
+    }
+
+    private void markAnswerIfFlashcardIsToLearn(Answer answer, FlashcardsToLearn flashcardsToLearn) {
         Flashcard flashcard = flashcardService.findById(Long.parseLong(answer.getFlashcardId()));
         if(answer.getIsCorrect()) {
             if (flashcard.getCorrectAnswerCounter() < 2) {
                 flashcard.setCorrectAnswerCounter(flashcard.getCorrectAnswerCounter() + 1);
             } else {
-                FlashcardsToLearn flashcardsToLearn = flashcardsToLearnService.findByUserId(Long.parseLong(answer.getUserId()));
+                //FlashcardsToLearn flashcardsToLearn = flashcardsToLearnService.findByUserId(Long.parseLong(answer.getUserId()));
                 moveFlashcardFromFlashcardsToLearnToFlashcardsToRepeat(answer, flashcard, flashcardsToLearn);
             }
         } else {
             flashcard.setCorrectAnswerCounter(0);
         }
         flashcardService.saveFlashcard(flashcard);
+    }
+
+    private void markAnswerIfFlashcardIsToRepeat(Answer answer) {
+
     }
 
     private void moveFlashcardFromFlashcardsToLearnToFlashcardsToRepeat(Answer answer, Flashcard flashcard, FlashcardsToLearn flashcardsToLearn) {
