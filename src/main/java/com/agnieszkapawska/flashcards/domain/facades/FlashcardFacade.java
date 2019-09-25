@@ -5,6 +5,7 @@ import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveResponseDto;
 import com.agnieszkapawska.flashcards.domain.exceptions.EntityNotCreatedException;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
+import com.agnieszkapawska.flashcards.domain.models.FlashcardsToLearn;
 import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
 import com.agnieszkapawska.flashcards.domain.models.User;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
@@ -15,10 +16,8 @@ import com.agnieszkapawska.flashcards.domain.utils.CompareQuestionTagsSets;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -45,6 +44,9 @@ public class FlashcardFacade {
             });
             savedFlashcard.setQuestionTagsSet(questionTagsSet);
             flashcardService.saveFlashcard(savedFlashcard);
+            FlashcardsToLearn flashcardsToLearn = flashcardsToLearnService.findByUserId(Long.parseLong(flashcardSaveDto.getUserId()));
+            flashcardsToLearn.getFlashcards().add(flashcard);
+            flashcardsToLearnService.save(flashcardsToLearn);
             return modelMapper.map(savedFlashcard, FlashcardSaveResponseDto.class);
         } catch (DataIntegrityViolationException exception) {
             throw new EntityNotCreatedException("constraint violation exception");
