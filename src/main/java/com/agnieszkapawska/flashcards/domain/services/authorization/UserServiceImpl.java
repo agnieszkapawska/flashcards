@@ -11,7 +11,6 @@ import com.agnieszkapawska.flashcards.domain.services.FlashcardsToLearnService;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Optional;

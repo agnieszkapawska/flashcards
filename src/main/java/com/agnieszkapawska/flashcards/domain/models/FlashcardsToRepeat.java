@@ -9,18 +9,12 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name="flashcards_to_repeat")
-public class FlashcardsToRepeat {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @OneToOne
-    @JoinColumn(unique = true)
-    private User user;
+public class FlashcardsToRepeat extends FlashcardsStorage {
     @OneToMany
     @JoinColumn(name = "flashcardsToRepeat_id")
     private Set<Flashcard> flashcards;
 
     public FlashcardsToRepeat(User user) {
-        this.user = user;
+        super.user = user;
     }
 }

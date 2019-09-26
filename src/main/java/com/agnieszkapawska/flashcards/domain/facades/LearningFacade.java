@@ -2,13 +2,9 @@ package com.agnieszkapawska.flashcards.domain.facades;
 
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardGetResponseDto;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
+import com.agnieszkapawska.flashcards.domain.models.FlashcardsStorage;
 import com.agnieszkapawska.flashcards.domain.models.FlashcardsToLearn;
-import com.agnieszkapawska.flashcards.domain.models.FlashcardsToRefresh;
-import com.agnieszkapawska.flashcards.domain.models.FlashcardsToRepeat;
-import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
-import com.agnieszkapawska.flashcards.domain.services.FlashcardsToLearnService;
-import com.agnieszkapawska.flashcards.domain.services.FlashcardsToRefreshService;
-import com.agnieszkapawska.flashcards.domain.services.FlashcardsToRepeatService;
+import com.agnieszkapawska.flashcards.domain.services.*;
 import com.agnieszkapawska.flashcards.domain.utils.Answer;
 import org.modelmapper.ModelMapper;
 import java.util.*;
@@ -36,7 +32,7 @@ public class LearningFacade {
     }
 
     public List<FlashcardGetResponseDto> getFlashcardsToLearnByUserId(Long userId) {
-        FlashcardsToLearn flashcardsToLearn = flashcardsToLearnService.findByUserId(userId);
+        FlashcardsToLearn flashcardsToLearn = flashcardsToLearnService.findByUserId(userId).get();
         ArrayList<Flashcard> flashcards = new ArrayList<>(flashcardsToLearn.getFlashcards());
         return flashcards.stream()
                 .map(flashcard -> modelMapper.map(flashcard, FlashcardGetResponseDto.class))
@@ -44,32 +40,36 @@ public class LearningFacade {
     }
 
     public void markAnswer(Answer answer) {
+
         Long flashcardId = Long.parseLong(answer.getFlashcardId());
         shouldReturnFromMethod = false;
-        Flashcard flashcard = flashcardService.findById(Long.parseLong(answer.getFlashcardId()));
+        Flashcard flashcard = flashcardService.findById(flashcardId);
+
         flashcardsToLearnService.returnFlashcardToLearnWhenContainsFlashcardWithId(flashcardId)
                 .ifPresent(flashcardsToLearn -> {
-                    markAnswerIfFlashcardIsToLearn(answer, flashcard, flashcardsToLearn);
+                    markAnswer(answer, flashcard, flashcardsToLearn, flashcardsToLearnService, flashcardsToRepeatService);
                     flashcardService.saveFlashcard(flashcard);
                 });
         if (shouldReturnFromMethod) {
             return;
         }
+
         flashcardsToRepeatService.returnFlashcardToLearnWhenContainsFlashcardWithId(flashcardId)
                 .ifPresent(flashcardsToRepeat -> {
-                    markAnswerIfFlashcardIsToRepeat(answer, flashcard, flashcardsToRepeat);
+                    markAnswer(answer, flashcard, flashcardsToRepeat, flashcardsToRepeatService, flashcardsToRefreshService);
                     flashcardService.saveFlashcard(flashcard);
                 });
-
-
     }
 
-    private void markAnswerIfFlashcardIsToLearn(Answer answer, Flashcard flashcard, FlashcardsToLearn flashcardsToLearn) {
+    private void markAnswer(
+            Answer answer, Flashcard flashcard, FlashcardsStorage flashcardsStorage, FlashcardsStorageService serviceOne, FlashcardsStorageService serviceTwo) {
+
         if(answer.getIsCorrect()) {
             if (flashcard.getCorrectAnswerCounter() < 2) {
                 flashcard.setCorrectAnswerCounter(flashcard.getCorrectAnswerCounter() + 1);
             } else {
-                moveFlashcardFromFlashcardsToLearnToFlashcardsToRepeat(answer, flashcard, flashcardsToLearn);
+                moveFlashcardFromOneFlashcardsStorageToAnother(
+                        answer, flashcard, flashcardsStorage, flashcardsToLearnService, flashcardsToRepeatService);
             }
         } else {
             flashcard.setCorrectAnswerCounter(0);
@@ -77,49 +77,24 @@ public class LearningFacade {
         shouldReturnFromMethod = true;
     }
 
-    private void markAnswerIfFlashcardIsToRepeat(Answer answer, Flashcard flashcard, FlashcardsToRepeat flashcardsToRepeat) {
-        if(answer.getIsCorrect()) {
-            if(flashcard.getCorrectAnswerCounter() < 2) {
-                flashcard.setCorrectAnswerCounter(flashcard.getCorrectAnswerCounter() + 1);
-            } else {
-                moveFlashcardFromFlashcardToRepeatToFlashcardToRefresh(answer, flashcard, flashcardsToRepeat);
-            }
-        }
-    }
-
-    private void moveFlashcardFromFlashcardToRepeatToFlashcardToRefresh(Answer answer, Flashcard flashcard, FlashcardsToRepeat flashcardsToRepeat) {
+    private void moveFlashcardFromOneFlashcardsStorageToAnother(
+            Answer answer, Flashcard flashcard, FlashcardsStorage fromWhichFlashcardsStorageIsMoved,
+            FlashcardsStorageService fromWhichFlashcardIsMovedService, FlashcardsStorageService toWhichFlashcardIsMovedService) {
         Long userId = Long.parseLong(answer.getUserId());
 
-        flashcardsToRepeat.getFlashcards().remove(flashcard);
-        flashcardsToRepeatService.save(flashcardsToRepeat);
+        fromWhichFlashcardsStorageIsMoved.getFlashcards().remove(flashcard);
+        fromWhichFlashcardIsMovedService.save(fromWhichFlashcardsStorageIsMoved);
 
+        FlashcardsStorage toWhichFlashcardsStorageIsMoved = (FlashcardsStorage) toWhichFlashcardIsMovedService.findByUserId(userId)
+                .orElse(
+                        toWhichFlashcardIsMovedService.createObject(flashcard.getUser())
+                );
         flashcard.setCorrectAnswerCounter(0);
 
-        FlashcardsToRefresh flashcardsToRefresh = flashcardsToRefreshService.findByUserId(userId)
-                .orElse(new FlashcardsToRefresh(flashcard.getUser()));
-        Set<Flashcard> flashcards = Optional.ofNullable(flashcardsToRefresh.getFlashcards())
+        Set<Flashcard> flashcards = Optional.ofNullable(toWhichFlashcardsStorageIsMoved.getFlashcards())
                 .orElse(new HashSet<>());
-
         flashcards.add(flashcard);
-        flashcardsToRefresh.setFlashcards(flashcards);
-
-        flashcardsToRefreshService.save(flashcardsToRefresh);
-    }
-
-    private void moveFlashcardFromFlashcardsToLearnToFlashcardsToRepeat(Answer answer, Flashcard flashcard, FlashcardsToLearn flashcardsToLearn) {
-        flashcardsToLearn.getFlashcards().remove(flashcard);
-        flashcardsToLearnService.save(flashcardsToLearn);
-
-        flashcard.setCorrectAnswerCounter(0);
-
-        FlashcardsToRepeat flashcardsToRepeat = flashcardsToRepeatService.findByUserId(Long.parseLong(answer.getUserId()))
-                .orElse(new FlashcardsToRepeat(flashcard.getUser()));
-        Set<Flashcard> flashcards = Optional.ofNullable(flashcardsToRepeat.getFlashcards())
-                .orElse(new HashSet<>());
-
-        flashcards.add(flashcard);
-        flashcardsToRepeat.setFlashcards(flashcards);
-
-        flashcardsToRepeatService.save(flashcardsToRepeat);
+        toWhichFlashcardsStorageIsMoved.setFlashcards(flashcards);
+        toWhichFlashcardIsMovedService.save(toWhichFlashcardsStorageIsMoved);
     }
 }

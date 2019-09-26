@@ -4,9 +4,8 @@ import com.agnieszkapawska.flashcards.domain.facades.LearningFacade;
 import com.agnieszkapawska.flashcards.domain.repositories.FlashcardsToLearnRepository;
 import com.agnieszkapawska.flashcards.domain.repositories.FlashcardsToRefreshRepository;
 import com.agnieszkapawska.flashcards.domain.repositories.FlashcardsToRepeatRepository;
-import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
+import com.agnieszkapawska.flashcards.domain.services.*;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardsToLearnService;
-import com.agnieszkapawska.flashcards.domain.services.FlashcardsToRefreshService;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardsToRepeatService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -38,5 +37,4 @@ public class FlashcardsStorageConfiguration {
     FlashcardsToRefreshService flashcardsToRefreshService(FlashcardsToRefreshRepository flashcardsToRefreshService) {
         return new FlashcardsToRefreshService(flashcardsToRefreshService);
     }
-
 }
