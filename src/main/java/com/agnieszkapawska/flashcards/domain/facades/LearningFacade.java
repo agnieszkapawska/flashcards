@@ -11,7 +11,6 @@ import org.modelmapper.ModelMapper;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
 public class LearningFacade {
     private FlashcardsToLearnService flashcardsToLearnService;
     private FlashcardService flashcardService;
@@ -41,12 +40,11 @@ public class LearningFacade {
     }
 
     public void markAnswer(Answer answer) {
-
         Long flashcardId = Long.parseLong(answer.getFlashcardId());
         shouldReturnFromMethod = false;
         Flashcard flashcard = flashcardService.findById(flashcardId);
 
-        flashcardsToLearnService.returnFlashcardToLearnWhenContainsFlashcardWithId(flashcardId)
+        flashcardsToLearnService.findByFlashcardId(flashcardId)
                 .ifPresent(flashcardsToLearn -> {
                     markAnswer(answer, flashcard, flashcardsToLearn, flashcardsToLearnService, flashcardsToRepeatService);
                     flashcardService.saveFlashcard(flashcard);
@@ -55,7 +53,7 @@ public class LearningFacade {
             return;
         }
 
-        flashcardsToRepeatService.returnFlashcardToLearnWhenContainsFlashcardWithId(flashcardId)
+        flashcardsToRepeatService.findByFlashcardIs(flashcardId)
                 .ifPresent(flashcardsToRepeat -> {
                     markAnswer(answer, flashcard, flashcardsToRepeat, flashcardsToRepeatService, flashcardsToRefreshService);
                     flashcardService.saveFlashcard(flashcard);
@@ -64,7 +62,7 @@ public class LearningFacade {
             return;
         }
 
-        flashcardsToRefreshService.returnFlashcardToLearnWhenContainsFlashcardWithId(flashcardId)
+        flashcardsToRefreshService.findByFlashcardId(flashcardId)
                 .ifPresent(flashcardsToRefresh -> {
                     markAnswer(answer, flashcard, flashcardsToRefresh, flashcardsToRefreshService, flashcardsToRefreshService);
                     flashcardService.saveFlashcard(flashcard);

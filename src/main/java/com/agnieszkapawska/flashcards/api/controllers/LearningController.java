@@ -20,6 +20,11 @@ public class LearningController {
         return new ResponseEntity<>(learningFacade.getFlashcardsToLearnByUserId(userId), HttpStatus.OK);
     }
 
+    /**
+     * Adding multiplies controllers would improve efficiency
+     * now flashcard is searched in 3 flashcards categories
+     * if flashcardsStorage was passed in request body flashcard will be searched only in one category
+     **/
     @PutMapping
     public ResponseEntity<Void> markAnswer(@RequestBody Answer answer) {
         learningFacade.markAnswer(answer);

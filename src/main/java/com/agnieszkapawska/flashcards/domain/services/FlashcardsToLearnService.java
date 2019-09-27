@@ -25,7 +25,7 @@ public class FlashcardsToLearnService implements FlashcardsStorageService<Flashc
         return new FlashcardsToLearn(user);
     }
 
-    public Optional<FlashcardsToLearn> returnFlashcardToLearnWhenContainsFlashcardWithId(Long flashcardId) {
+    public Optional<FlashcardsToLearn> findByFlashcardId(Long flashcardId) {
         return flashcardsToLearnRepository.findByFlashcardsId(flashcardId);
     }
 }

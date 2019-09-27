@@ -25,7 +25,7 @@ public class FlashcardsToRefreshService implements FlashcardsStorageService<Flas
         return new FlashcardsToRefresh(user);
     }
 
-    public Optional<FlashcardsToRefresh> returnFlashcardToLearnWhenContainsFlashcardWithId(Long flashcardId) {
+    public Optional<FlashcardsToRefresh> findByFlashcardId(Long flashcardId) {
         return flashcardsToRefreshRepository.findByFlashcardsId(flashcardId);
     }
 }
