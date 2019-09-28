@@ -16,7 +16,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
-public class FlashcardControllerTest extends HelpersFactory {
+public class FlashcardControllerTest extends FlashcardsApplicationAbstractTests {
     private String url;
     @MockBean
     private FlashcardFacade flashcardFacade;
@@ -31,13 +31,13 @@ public class FlashcardControllerTest extends HelpersFactory {
     public void shouldReturnStatusOk_WhenSavingFlashcard() {
         //given
         when(flashcardFacade.saveFlashcard(any(FlashcardSaveDto.class)))
-                .thenReturn(HelpersFactory.flashcardSaveResponseDto);
+                .thenReturn(HelpersFactory.createFlashcardSaveResponseDto());
         //when
         ResponseEntity<FlashcardSaveResponseDto> responseEntity =
-                testRestTemplate.postForEntity(this.url, HelpersFactory.flashcardSaveDto, FlashcardSaveResponseDto.class);
+                testRestTemplate.postForEntity(this.url, HelpersFactory.createFlashcardSaveDto(), FlashcardSaveResponseDto.class);
         //then
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assert.assertEquals(HelpersFactory.flashcardSaveResponseDto, responseEntity.getBody());
+        Assert.assertEquals(HelpersFactory.createFlashcardSaveResponseDto(), responseEntity.getBody());
     }
 
     @Test
@@ -45,9 +45,10 @@ public class FlashcardControllerTest extends HelpersFactory {
         //given
         doThrow(new EntityNotCreatedException("something went wrong"))
                 .when(flashcardFacade).saveFlashcard(any(FlashcardSaveDto.class));
+        FlashcardSaveDto flashcardSaveDto = HelpersFactory.createFlashcardSaveDto();
         //when
         ResponseEntity<FlashcardSaveResponseDto> responseEntity =
-                testRestTemplate.postForEntity(this.url, HelpersFactory.flashcardSaveDto, FlashcardSaveResponseDto.class);
+                testRestTemplate.postForEntity(this.url, HelpersFactory.createFlashcardSaveDto(), FlashcardSaveResponseDto.class);
         //then
         Assert.assertEquals(HttpStatus.CONFLICT, responseEntity.getStatusCode());
     }

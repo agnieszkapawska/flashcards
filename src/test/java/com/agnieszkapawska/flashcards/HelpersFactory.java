@@ -4,23 +4,20 @@ import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveResponseDto;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
-import org.junit.Before;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class HelpersFactory extends FlashcardsApplicationAbstractTests {
-    protected static FlashcardSaveDto flashcardSaveDto;
-    protected static FlashcardSaveResponseDto flashcardSaveResponseDto;
-    protected static QuestionTag questionTag;
+public final class HelpersFactory extends FlashcardsApplicationAbstractTests {
 
-    @Before
-    public void setUp(){
-        super.setUp();
-        flashcardSaveDto = createFlashcardSaveDto();
-        flashcardSaveResponseDto = new FlashcardSaveResponseDto();
+    public static FlashcardSaveResponseDto createFlashcardSaveResponseDto() {
+        FlashcardSaveResponseDto flashcardSaveResponseDto = new FlashcardSaveResponseDto();
         flashcardSaveResponseDto.setId(3L);
-        questionTag = createQuestionTag(1L, "home");
+        return flashcardSaveResponseDto;
+    }
+
+    public static QuestionTag createQuestionTag() {
+        return createQuestionTag(1L, "home");
     }
 
     public static QuestionTag createQuestionTag(Long id, String name) {

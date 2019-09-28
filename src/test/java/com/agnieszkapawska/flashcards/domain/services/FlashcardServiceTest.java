@@ -1,6 +1,6 @@
 package com.agnieszkapawska.flashcards.domain.services;
 
-import com.agnieszkapawska.flashcards.HelpersFactory;
+import com.agnieszkapawska.flashcards.FlashcardsApplicationAbstractTests;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import com.agnieszkapawska.flashcards.domain.repositories.FlashcardRepository;
 import org.junit.Assert;
@@ -10,7 +10,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +18,7 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
-public class FlashcardServiceTest extends HelpersFactory {
+public class FlashcardServiceTest extends FlashcardsApplicationAbstractTests {
     @MockBean
     private FlashcardRepository flashcardRepository;
     @Autowired

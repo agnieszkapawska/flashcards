@@ -1,5 +1,6 @@
 package com.agnieszkapawska.flashcards.domain.services;
 
+import com.agnieszkapawska.flashcards.FlashcardsApplicationAbstractTests;
 import com.agnieszkapawska.flashcards.HelpersFactory;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class QuestionTagServiceTest extends HelpersFactory {
+public class QuestionTagServiceTest extends FlashcardsApplicationAbstractTests {
     @MockBean
     private QuestionTagRepository questionTagRepository;
     @Autowired
