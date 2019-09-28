@@ -1,6 +1,6 @@
 package com.agnieszkapawska.flashcards.api.controllers;
 
-import com.agnieszkapawska.flashcards.FlashcardAndQuestionTagAbstractTests;
+import com.agnieszkapawska.flashcards.HelpersFactory;
 import com.agnieszkapawska.flashcards.FlashcardsApplicationAbstractTests;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveResponseDto;
@@ -16,7 +16,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
-public class FlashcardControllerTest extends FlashcardAndQuestionTagAbstractTests {
+public class FlashcardControllerTest extends HelpersFactory {
     private String url;
     @MockBean
     private FlashcardFacade flashcardFacade;
@@ -31,13 +31,13 @@ public class FlashcardControllerTest extends FlashcardAndQuestionTagAbstractTest
     public void shouldReturnStatusOk_WhenSavingFlashcard() {
         //given
         when(flashcardFacade.saveFlashcard(any(FlashcardSaveDto.class)))
-                .thenReturn(super.flashcardSaveResponseDto);
+                .thenReturn(HelpersFactory.flashcardSaveResponseDto);
         //when
         ResponseEntity<FlashcardSaveResponseDto> responseEntity =
-                testRestTemplate.postForEntity(this.url, super.flashcardSaveDto, FlashcardSaveResponseDto.class);
+                testRestTemplate.postForEntity(this.url, HelpersFactory.flashcardSaveDto, FlashcardSaveResponseDto.class);
         //then
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assert.assertEquals(super.flashcardSaveResponseDto, responseEntity.getBody());
+        Assert.assertEquals(HelpersFactory.flashcardSaveResponseDto, responseEntity.getBody());
     }
 
     @Test
@@ -47,7 +47,7 @@ public class FlashcardControllerTest extends FlashcardAndQuestionTagAbstractTest
                 .when(flashcardFacade).saveFlashcard(any(FlashcardSaveDto.class));
         //when
         ResponseEntity<FlashcardSaveResponseDto> responseEntity =
-                testRestTemplate.postForEntity(this.url, super.flashcardSaveDto, FlashcardSaveResponseDto.class);
+                testRestTemplate.postForEntity(this.url, HelpersFactory.flashcardSaveDto, FlashcardSaveResponseDto.class);
         //then
         Assert.assertEquals(HttpStatus.CONFLICT, responseEntity.getStatusCode());
     }

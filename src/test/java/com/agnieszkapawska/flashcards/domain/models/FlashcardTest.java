@@ -1,11 +1,11 @@
 package com.agnieszkapawska.flashcards.domain.models;
 
-import com.agnieszkapawska.flashcards.FlashcardAndQuestionTagAbstractTests;
+import com.agnieszkapawska.flashcards.HelpersFactory;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class FlashcardTest extends FlashcardAndQuestionTagAbstractTests {
+public class FlashcardTest extends HelpersFactory {
 
     @Test
     public void shouldUpdateFlashcard() {

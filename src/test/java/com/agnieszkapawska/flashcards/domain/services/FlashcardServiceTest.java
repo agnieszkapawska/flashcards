@@ -1,13 +1,12 @@
 package com.agnieszkapawska.flashcards.domain.services;
 
-import com.agnieszkapawska.flashcards.FlashcardAndQuestionTagAbstractTests;
+import com.agnieszkapawska.flashcards.HelpersFactory;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import com.agnieszkapawska.flashcards.domain.repositories.FlashcardRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,7 +19,7 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
-public class FlashcardServiceTest extends FlashcardAndQuestionTagAbstractTests {
+public class FlashcardServiceTest extends HelpersFactory {
     @MockBean
     private FlashcardRepository flashcardRepository;
     @Autowired

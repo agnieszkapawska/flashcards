@@ -1,6 +1,6 @@
 package com.agnieszkapawska.flashcards.domain.services;
 
-import com.agnieszkapawska.flashcards.FlashcardAndQuestionTagAbstractTests;
+import com.agnieszkapawska.flashcards.HelpersFactory;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
 import com.agnieszkapawska.flashcards.domain.repositories.QuestionTagRepository;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class QuestionTagServiceTest extends FlashcardAndQuestionTagAbstractTests {
+public class QuestionTagServiceTest extends HelpersFactory {
     @MockBean
     private QuestionTagRepository questionTagRepository;
     @Autowired
@@ -65,7 +65,7 @@ public class QuestionTagServiceTest extends FlashcardAndQuestionTagAbstractTests
     public void findFlashcardsByTags_ShouldReturnFlashcardsListWithTwoElements_WhenQuestionTagExist() {
         //given
         when(questionTagRepository.findByName(anyString()))
-                .thenReturn(Optional.of(super.createQuestionTag(1l, "home")));
+                .thenReturn(Optional.of(HelpersFactory.createQuestionTag(1l, "home")));
         //when
         List<Flashcard> flashcardsFoundByTags = questionTagService.findFlashcardsByTags(tagsNamesList);
         //then
