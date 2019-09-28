@@ -28,9 +28,9 @@ public abstract class FlashcardAndQuestionTagAbstractTests extends FlashcardsApp
         questionTag.setId(id);
         questionTag.setName("vary");
 
-        Set<Flashcard> flashcardSet = new HashSet<>
+        Set<Flashcard> flashcardsSet = new HashSet<>
                 (Arrays.asList(new Flashcard("dom", "home"), new Flashcard("wakacje", "holiday")));
-        questionTag.setFlashcards(flashcardSet);
+        questionTag.setFlashcards(flashcardsSet);
 
         return questionTag;
     }

@@ -29,9 +29,9 @@ public class FlashcardControllerTest extends FlashcardAndQuestionTagAbstractTest
 
     @Test
     public void shouldReturnStatusOk_WhenSavingFlashcard() {
-        System.out.println(url);
         //given
-        when(flashcardFacade.saveFlashcard(any(FlashcardSaveDto.class))).thenReturn(super.flashcardSaveResponseDto);
+        when(flashcardFacade.saveFlashcard(any(FlashcardSaveDto.class)))
+                .thenReturn(super.flashcardSaveResponseDto);
         //when
         ResponseEntity<FlashcardSaveResponseDto> responseEntity =
                 testRestTemplate.postForEntity(this.url, super.flashcardSaveDto, FlashcardSaveResponseDto.class);
@@ -42,7 +42,6 @@ public class FlashcardControllerTest extends FlashcardAndQuestionTagAbstractTest
 
     @Test
     public void shouldReturnStatusConflict_WhenSavingFlashcard_WhenCouldNotCreateEntity() {
-        System.out.println(url);
         //given
         doThrow(new EntityNotCreatedException("something went wrong"))
                 .when(flashcardFacade).saveFlashcard(any(FlashcardSaveDto.class));

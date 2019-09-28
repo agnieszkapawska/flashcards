@@ -47,10 +47,11 @@ public class QuestionTagServiceTest extends FlashcardAndQuestionTagAbstractTests
         //then
         Assert.assertEquals(2, questionTagsSet.size());
         Assert.assertEquals(tagsNamesSet, newTagsNames);
+        verify(questionTagRepository, times(2)).save(any(QuestionTag.class));
     }
 
     @Test
-    public void shouldInvokeMethodDeleteOnQuestionTagRepository_WhenDeleteUselessQuestionTags() {
+    public void deleteUselessQuestionTags_shouldInvokeMethodDeleteOnQuestionTagRepository() {
         //given
         doNothing().when(questionTagRepository).delete(any(QuestionTag.class));
         Set<QuestionTag> questionTagsSet = new HashSet<>(Arrays.asList(new QuestionTag("home"), new QuestionTag("holiday")));
@@ -61,7 +62,7 @@ public class QuestionTagServiceTest extends FlashcardAndQuestionTagAbstractTests
     }
 
     @Test
-    public void findFlashcardsByTags_ShouldReturnExpectedFlashcardList_WhenQuestionTagExist() {
+    public void findFlashcardsByTags_ShouldReturnFlashcardsListWithTwoElements_WhenQuestionTagExist() {
         //given
         when(questionTagRepository.findByName(anyString()))
                 .thenReturn(Optional.of(super.createQuestionTag(1l, "home")));

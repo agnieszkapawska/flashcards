@@ -43,10 +43,11 @@ public class FlashcardFacadeTest extends FlashcardAndQuestionTagAbstractTests {
     public void saveFlashcard_ShouldReturnFlashcardSaveResponseDto() {
         //given
         FlashcardSaveDto flashcardSaveDto = new FlashcardSaveDto();
+        flashcardSaveDto.setTagsSet(new HashSet<>(Arrays.asList("home", "holiday")));
 
         Set<QuestionTag> questionTagSet = new HashSet<>(Arrays.asList(createQuestionTag(1L, "home"),
                 createQuestionTag(2L, "holiday")));
-        flashcardSaveDto.setTagsSet(new HashSet<>(Arrays.asList("home", "holiday")));
+        List<QuestionTag> questionTagList = new ArrayList<>(questionTagSet);
 
         when(flashcardService.saveFlashcard(any(Flashcard.class)))
                 .thenReturn(flashcard);
@@ -56,16 +57,17 @@ public class FlashcardFacadeTest extends FlashcardAndQuestionTagAbstractTests {
         Long expectedId = 1L;
         //when
         FlashcardSaveResponseDto flashcardSaveResponseDto = flashcardFacade.saveFlashcard(flashcardSaveDto);
-        List<QuestionTag> questionTagList = new ArrayList<>(questionTagSet);
         //then
         Assert.assertNotNull(flashcardSaveResponseDto);
         Assert.assertEquals(expectedId, flashcardSaveResponseDto.getId());
+
+        //check if question tags contain flashcard
         Assert.assertTrue(questionTagList.get(0).getFlashcards().contains(flashcard));
         Assert.assertTrue(questionTagList.get(1).getFlashcards().contains(flashcard));
     }
 
     @Test
-    public void whenUpdateFlashcard_ThenShouldInvokeDeleteUselessQuestionTagsInQuestionTagService_AndReturnExpectedFlashcardSaveResponseDto() {
+    public void updateFlashcard_shouldInvokeDeleteUselessQuestionTagsInQuestionTagService_AndReturnExpectedFlashcardSaveResponseDto() {
         //given
         when(flashcardService.findById(anyLong()))
                 .thenReturn(flashcard);
@@ -84,7 +86,7 @@ public class FlashcardFacadeTest extends FlashcardAndQuestionTagAbstractTests {
     @Test
     public void whenUpdateFlashcard_ThenShouldNotInvokeDeleteUselessQuestionTagsInQuestionTagService_AndReturnExpectedFlashcardSaveResponseDto() {
         //given
-        //added question tag has two flashcards so shouldn't be remove
+        //added question tag has two flashcards so shouldn't be removed
         flashcard.getQuestionTagsSet().add(super.questionTag);
 
         when(flashcardService.findById(anyLong()))
@@ -99,13 +101,5 @@ public class FlashcardFacadeTest extends FlashcardAndQuestionTagAbstractTests {
         //then
         Assert.assertSame(1L, flashcardSaveResponseDto.getId());
         verify(questionTagService, never()).deleteUselessQuestionTags(any(HashSet.class));
-    }
-
-    @Test
-    public void getFlashcards() {
-    }
-
-    @Test
-    public void getFlashcardById() {
     }
 }
