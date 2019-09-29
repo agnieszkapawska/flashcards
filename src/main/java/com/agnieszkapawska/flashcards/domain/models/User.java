@@ -2,7 +2,6 @@ package com.agnieszkapawska.flashcards.domain.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -31,10 +30,6 @@ public class User {
     private Set<Role> roles = new HashSet<>();
     @OneToMany(mappedBy = "user")
     private Set<Flashcard> flashcards = new HashSet<>();
-    @OneToOne(mappedBy = "user")
-    private FlashcardsToLearn flashcardsToLearn;
-    @OneToOne(mappedBy = "user")
-    private FlashcardsToRepeat flashcardsToRepeat;
 
     public User(Long id) {
         this.id = id;

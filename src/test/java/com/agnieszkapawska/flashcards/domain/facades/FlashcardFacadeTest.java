@@ -4,6 +4,7 @@ import com.agnieszkapawska.flashcards.FlashcardAndQuestionTagAbstractTests;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveResponseDto;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
+import com.agnieszkapawska.flashcards.domain.models.FlashcardsToLearn;
 import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
 import com.agnieszkapawska.flashcards.domain.models.User;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
@@ -50,6 +51,8 @@ public class FlashcardFacadeTest extends FlashcardAndQuestionTagAbstractTests {
     public void saveFlashcard_ShouldReturnFlashcardSaveResponseDto() {
         //given
         FlashcardSaveDto flashcardSaveDto = new FlashcardSaveDto();
+        FlashcardsToLearn flashcardsToLearn = new FlashcardsToLearn();
+        flashcardsToLearn.setFlashcards(new HashSet<>());
 
         Set<QuestionTag> questionTagSet = new HashSet<>(Arrays.asList(createQuestionTag(1L, "home"),
                 createQuestionTag(2L, "holiday")));
@@ -57,8 +60,8 @@ public class FlashcardFacadeTest extends FlashcardAndQuestionTagAbstractTests {
         flashcardSaveDto.setUserId("1");
         when(userService.findById(anyLong()))
                 .thenReturn(new User(1L ));
-//        when(flashcardsToLearnService.findByUserId(anyLong()))
-//                .thenReturn(new FlashcardsToLearn());
+        when(flashcardsToLearnService.findByUserId(anyLong()))
+                .thenReturn(Optional.of(flashcardsToLearn));
         when(flashcardService.saveFlashcard(any(Flashcard.class)))
                 .thenReturn(flashcard);
         when(questionTagService.getQuestionTagsSet(anySet()))

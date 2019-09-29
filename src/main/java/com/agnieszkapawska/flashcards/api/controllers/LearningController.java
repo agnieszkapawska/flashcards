@@ -15,8 +15,8 @@ import java.util.List;
 public class LearningController {
     private LearningFacade learningFacade;
 
-    @GetMapping
-    public ResponseEntity<List<FlashcardGetResponseDto>> getFlashcardsToLearnByUserId(@RequestParam(value = "userId")Long userId) {
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<FlashcardGetResponseDto>> getFlashcardsToLearnByUserId(@PathVariable Long userId) {
         return new ResponseEntity<>(learningFacade.getFlashcardsToLearnByUserId(userId), HttpStatus.OK);
     }
 
@@ -25,7 +25,7 @@ public class LearningController {
      * now flashcard is searched in 3 flashcards categories
      * if flashcardsStorage was passed in request body flashcard will be searched only in one category
      **/
-    @PutMapping
+    @PutMapping("/{userId}/answer")
     public ResponseEntity<Void> markAnswer(@RequestBody Answer answer) {
         learningFacade.markAnswer(answer);
         return new ResponseEntity<>(HttpStatus.OK);

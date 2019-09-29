@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class Answer {
     private Boolean isCorrect;
-    private String flashcardId;
-    private String userId;
+    private Long flashcardId;
+    private Long userId;
 }

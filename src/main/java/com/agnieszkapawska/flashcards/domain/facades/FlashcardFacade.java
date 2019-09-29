@@ -46,7 +46,13 @@ public class FlashcardFacade {
             });
             savedFlashcard.setQuestionTagsSet(questionTagsSet);
             flashcardService.saveFlashcard(savedFlashcard);
-            FlashcardsToLearn flashcardsToLearn = flashcardsToLearnService.findByUserId(Long.parseLong(flashcardSaveDto.getUserId())).get();
+            FlashcardsToLearn flashcardsToLearn = flashcardsToLearnService
+                    .findByUserId(Long.parseLong(flashcardSaveDto.getUserId()))
+                    .orElseGet(() -> {
+                        FlashcardsToLearn newFlashcardsToLearn = new FlashcardsToLearn();
+                        newFlashcardsToLearn.setFlashcards(new HashSet<>());
+                        return newFlashcardsToLearn;
+                    });
             flashcardsToLearn.getFlashcards().add(flashcard);
             flashcardsToLearnService.save(flashcardsToLearn);
             return modelMapper.map(savedFlashcard, FlashcardSaveResponseDto.class);
