@@ -1,8 +1,7 @@
 package com.agnieszkapawska.flashcards.api.controllers;
 
-import com.agnieszkapawska.flashcards.domain.dtos.UserLoginDto;
 import com.agnieszkapawska.flashcards.domain.dtos.UserSaveDto;
-import com.agnieszkapawska.flashcards.domain.dtos.UserSaveResponseDto;
+import com.agnieszkapawska.flashcards.domain.dtos.UserRegistrationResponseDto;
 import com.agnieszkapawska.flashcards.domain.facades.UserFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,12 +14,12 @@ public class UserController {
     private UserFacade userFacade;
 
     @PostMapping("/registration")
-    public ResponseEntity<UserSaveResponseDto> registerUser(@RequestBody UserSaveDto userSaveDto) {
+    public ResponseEntity<UserRegistrationResponseDto> registerUser(@RequestBody UserSaveDto userSaveDto) {
         return new ResponseEntity<>(userFacade.registerUser(userSaveDto), HttpStatus.OK);
     }
 
     @GetMapping("/login")
-    public ResponseEntity<UserSaveResponseDto> login(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<UserRegistrationResponseDto> login(@RequestParam String username, @RequestParam String password) {
         return new ResponseEntity<>(userFacade.login(username, password), HttpStatus.OK);
     }
 }

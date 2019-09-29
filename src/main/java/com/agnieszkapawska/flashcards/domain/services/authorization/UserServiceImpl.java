@@ -28,8 +28,7 @@ public class UserServiceImpl implements UserService {
         user.setRoles(roles);
         try {
             userRepository.save(user);
-        } catch (
-                DataIntegrityViolationException exception) {
+        } catch (DataIntegrityViolationException exception) {
             throw new EntityNotCreatedException("Constraint violation exception. User name and email must be unique");
         } catch (Exception exception) {
             throw new EntityNotCreatedException("something went wrong");
@@ -38,7 +37,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {
-        return userRepository.findByUserName(username).orElseThrow(() -> new EntityCouldNotBeFoundException(username + " couldn't be found"));
+        return userRepository.findByUserName(username)
+                .orElseThrow(() -> new EntityCouldNotBeFoundException(username + " couldn't be found"));
     }
 
     @Override
@@ -57,14 +57,13 @@ public class UserServiceImpl implements UserService {
     private Set<Role> getRoles(Set<String> rolesNames) {
         Set<Role> roles = new HashSet<>();
         rolesNames.forEach(roleName -> {
-            Optional<Role> roleOptional = roleRepository.findByName(roleName);
-            if (roleOptional.isPresent()) {
-                roles.add(roleOptional.get());
-            } else {
-                Role role = new Role(roleName);
-                roleRepository.save(role);
-                roles.add(role);
-            }
+            Role role = roleRepository.findByName(roleName)
+                    .orElseGet(() -> {
+                        Role role1 = new Role(roleName);
+                        roleRepository.save(role1);
+                        return role1;
+                    });
+            roles.add(role);
         });
         return roles;
     }
