@@ -51,7 +51,7 @@ public class FlashcardFacadeTest extends FlashcardAndQuestionTagAbstractTests {
         Set<QuestionTag> questionTagSet = new HashSet<>(Arrays.asList(createQuestionTag(1L, "home"),
                 createQuestionTag(2L, "holiday")));
         flashcardSaveDto.setTagsSet(new HashSet<>(Arrays.asList("home", "holiday")));
-        flashcardSaveDto.setUserId("1");
+        flashcardSaveDto.setUserId(1L);
         when(userService.findById(anyLong()))
                 .thenReturn(new User(1L ));
         when(flashcardService.saveFlashcard(any(Flashcard.class)))

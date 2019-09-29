@@ -26,8 +26,8 @@ public class FlashcardFacade {
 
     public FlashcardSaveResponseDto saveFlashcard(FlashcardSaveDto flashcardSaveDto) {
         Flashcard flashcard = modelMapper.map(flashcardSaveDto, Flashcard.class);
-        if(!flashcardSaveDto.getUserId().isEmpty()) {
-            User user = userService.findById(Long.parseLong(flashcardSaveDto.getUserId()));
+        if(flashcardSaveDto.getUserId() != null) {
+            User user = userService.findById(flashcardSaveDto.getUserId());
             flashcard.setUser(user);
         } else {
             throw new EntityNotCreatedException("User id can't be empty ");
