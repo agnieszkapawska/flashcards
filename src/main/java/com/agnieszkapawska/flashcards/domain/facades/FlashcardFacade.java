@@ -1,6 +1,6 @@
 package com.agnieszkapawska.flashcards.domain.facades;
 
-import com.agnieszkapawska.flashcards.domain.dtos.FlashcardGetDto;
+import com.agnieszkapawska.flashcards.domain.dtos.FlashcardGetResponseDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveResponseDto;
 import com.agnieszkapawska.flashcards.domain.exceptions.EntityNotCreatedException;
@@ -25,7 +25,7 @@ public class FlashcardFacade {
         Flashcard flashcard = modelMapper.map(flashcardSaveDto, Flashcard.class);
         try {
             Flashcard savedFlashcard = flashcardService.saveFlashcard(flashcard);
-            Set<QuestionTag> questionTagsSet = questionTagService.getQuestionTagsSet(flashcardSaveDto.getTagsList());
+            Set<QuestionTag> questionTagsSet = questionTagService.getQuestionTagsSet(flashcardSaveDto.getTagsSet());
             questionTagsSet.forEach(questionTag -> {
                 questionTag.getFlashcards().add(savedFlashcard);
             });
@@ -43,7 +43,7 @@ public class FlashcardFacade {
         Flashcard existingFlashcard = flashcardService.findById(id);
 
         CompareQuestionTagsSets tagsToUpdate =
-                new CompareQuestionTagsSets(existingFlashcard.getQuestionTagsSet(), flashcardSaveDto.getTagsList());
+                new CompareQuestionTagsSets(existingFlashcard.getQuestionTagsSet(), flashcardSaveDto.getTagsSet());
 
         Set<QuestionTag> questionTagsToAddSet = questionTagService.getQuestionTagsSet(tagsToUpdate.getTagsNamesToAdd());
         Set<QuestionTag> questionTagsToRemoveSet = questionTagService.getQuestionTagsSet(tagsToUpdate.getTagsNamesToRemove());
@@ -89,7 +89,7 @@ public class FlashcardFacade {
         return uselessQuestionTags;
     }
 
-    public List<FlashcardGetDto> getFlashcards(Optional<String> searchPhrase, Optional<List<String>> tagsList) {
+    public List<FlashcardGetResponseDto> getFlashcards(Optional<String> searchPhrase, Optional<List<String>> tagsList) {
         List<Flashcard> flashcards;
         if(searchPhrase.isPresent()) {
             flashcards = flashcardService.findByPhrase(searchPhrase.get());
@@ -100,7 +100,11 @@ public class FlashcardFacade {
             flashcards = flashcardService.findAll();
         }
         return flashcards.stream()
-                .map(flashcard -> modelMapper.map(flashcard, FlashcardGetDto.class))
+                .map(flashcard -> modelMapper.map(flashcard, FlashcardGetResponseDto.class))
                 .collect(Collectors.toList());
+    }
+
+    public FlashcardGetResponseDto getFlashcardById(Long id) {
+        return modelMapper.map(flashcardService.findById(id), FlashcardGetResponseDto.class);
     }
 }

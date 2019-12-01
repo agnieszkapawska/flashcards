@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -32,6 +29,18 @@ public class Flashcard {
     @JsonManagedReference
     private Set<QuestionTag> questionTagsSet = new HashSet<>();
 
+    public Flashcard(String question, String answer) {
+        this.question = question;
+        this.answer = answer;
+    }
+
+    public void update(FlashcardSaveDto flashcardSaveDto) {
+        this.setQuestion(flashcardSaveDto.getQuestion());
+        this.setAnswer(flashcardSaveDto.getAnswer());
+        this.setExampleUsage(flashcardSaveDto.getExampleUsage());
+        this.setExplanation(flashcardSaveDto.getExplanation());
+    }
+
     @Override
     public String toString() {
         List<String> questionTagsNameSet = new ArrayList<>();
@@ -49,10 +58,20 @@ public class Flashcard {
                 '}';
     }
 
-    public void update(FlashcardSaveDto flashcardSaveDto) {
-        this.setQuestion(flashcardSaveDto.getQuestion());
-        this.setAnswer(flashcardSaveDto.getAnswer());
-        this.setExampleUsage(flashcardSaveDto.getExampleUsage());
-        this.setExplanation(flashcardSaveDto.getExplanation());
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Flashcard flashcard = (Flashcard) o;
+        return Objects.equals(id, flashcard.id) &&
+                Objects.equals(question, flashcard.question) &&
+                Objects.equals(answer, flashcard.answer) &&
+                Objects.equals(exampleUsage, flashcard.exampleUsage) &&
+                Objects.equals(explanation, flashcard.explanation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, question, answer, exampleUsage);
     }
 }

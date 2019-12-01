@@ -14,5 +14,5 @@ public class FlashcardSaveDto {
     private String answer;
     private String exampleUsage;
     private String explanation;
-    private Set<String> tagsList;
+    private Set<String> tagsSet;
 }
