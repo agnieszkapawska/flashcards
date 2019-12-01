@@ -5,9 +5,11 @@ import com.agnieszkapawska.flashcards.HelpersFactory;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveResponseDto;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
+import com.agnieszkapawska.flashcards.domain.models.FlashcardsToLearn;
 import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
 import com.agnieszkapawska.flashcards.domain.models.User;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
+import com.agnieszkapawska.flashcards.domain.services.FlashcardsToLearnService;
 import com.agnieszkapawska.flashcards.domain.services.QuestionTagService;
 import com.agnieszkapawska.flashcards.domain.services.authorization.UserService;
 import org.junit.Assert;
@@ -15,7 +17,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
 import java.util.*;
+
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -28,6 +32,8 @@ public class FlashcardFacadeTest extends FlashcardsApplicationAbstractTests {
     private QuestionTagService questionTagService;
     @MockBean
     private UserService userService;
+    @MockBean
+    private FlashcardsToLearnService flashcardsToLearnService;
     private Flashcard flashcard;
 
     @Before
@@ -48,16 +54,19 @@ public class FlashcardFacadeTest extends FlashcardsApplicationAbstractTests {
     public void saveFlashcard_ShouldReturnFlashcardSaveResponseDto() {
         //given
         FlashcardSaveDto flashcardSaveDto = new FlashcardSaveDto();
+        FlashcardsToLearn flashcardsToLearn = new FlashcardsToLearn();
+        flashcardsToLearn.setFlashcards(new HashSet<>());
+
         flashcardSaveDto.setTagsSet(new HashSet<>(Arrays.asList("home", "holiday")));
 
         flashcardSaveDto.setUserId(1L);
         when(userService.findById(anyLong()))
                 .thenReturn(new User(1L ));
+        when(flashcardsToLearnService.findByUserId(anyLong()))
+                .thenReturn(Optional.of(flashcardsToLearn));
 
         Set<QuestionTag> questionTagSet = new HashSet<>(Arrays.asList(HelpersFactory.createQuestionTag(1L, "home"),
                 HelpersFactory.createQuestionTag(2L, "holiday")));
-        List<QuestionTag> questionTagList = new ArrayList<>(questionTagSet);
-
 
         when(flashcardService.saveFlashcard(any(Flashcard.class)))
                 .thenReturn(flashcard);
@@ -67,10 +76,10 @@ public class FlashcardFacadeTest extends FlashcardsApplicationAbstractTests {
         Long expectedId = 1L;
         //when
         FlashcardSaveResponseDto flashcardSaveResponseDto = flashcardFacade.saveFlashcard(flashcardSaveDto);
+        List<QuestionTag> questionTagList = new ArrayList<>(questionTagSet);
         //then
         Assert.assertNotNull(flashcardSaveResponseDto);
         Assert.assertEquals(expectedId, flashcardSaveResponseDto.getId());
-
         //check if question tags contain flashcard
         Assert.assertTrue(questionTagList.get(0).getFlashcards().contains(flashcard));
         Assert.assertTrue(questionTagList.get(1).getFlashcards().contains(flashcard));

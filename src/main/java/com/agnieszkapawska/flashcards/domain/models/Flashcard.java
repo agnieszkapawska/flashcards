@@ -15,11 +15,11 @@ public class Flashcard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-    @Column(unique = true)
     private String question;
     private String answer;
     private String exampleUsage;
     private String explanation;
+    private int correctAnswerCounter;
     @ManyToMany
     @JoinTable(
             name = "Flashcard_QuestionTag",
