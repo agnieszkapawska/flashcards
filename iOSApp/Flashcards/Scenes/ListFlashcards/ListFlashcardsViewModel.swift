@@ -1,27 +1,21 @@
 import Combine
 import Foundation
 
-final class AddFlashcardViewModel: Identifiable, ObservableObject {
+final class ListFlashcardsViewModel: Identifiable, ObservableObject {
     
     private let networking: NetworkingProtocol
     private var disposables = Set<AnyCancellable>()
     
-    @Published var flashcard = AddFlashcard.Flashcard()
-    @Published var tagsList: String = "" {
-        didSet {
-            flashcard.tagsList = self.tagsList.split(separator: ",")
-                                              .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-        }
-    }
+    @Published var flashcards: [ListFlashcard.Flashcard] = []
     @Published var presentingAlert = false
     var alertMessage = ""
-    
+
     init(networking: NetworkingProtocol = Networking()) {
         self.networking = networking
     }
     
-    func save() {
-        let request = AddFlashcard.Request(flashcard).anyRequest
+    func load() {
+        let request = ListFlashcard.Request().anyRequest
         networking.execute(request)
             .receive(on: DispatchQueue.main)
             .sink(
@@ -34,10 +28,20 @@ final class AddFlashcardViewModel: Identifiable, ObservableObject {
                         break
                       }
                     },
-                    receiveValue: { _ in
-                        self.alertMessage = "You got it right!"
-                        self.presentingAlert = true
+                    receiveValue: { response in
+                        self.flashcards = response
                   })
             .store(in: &disposables)
+    }
+}
+
+extension ListFlashcard.Flashcard {
+    static var stub: [Self] {
+        return [
+        ListFlashcard.Flashcard(id: 0, question: "Krzyś"),
+        ListFlashcard.Flashcard(id: 1, question: "Agusia"),
+        ListFlashcard.Flashcard(id: 2, question: "Rudnik"),
+        ListFlashcard.Flashcard(id: 3, question: "Pierdziusia")
+        ]
     }
 }

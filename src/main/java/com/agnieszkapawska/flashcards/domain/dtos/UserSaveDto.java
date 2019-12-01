@@ -9,7 +9,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserSaveDto {
-
     private String email;
     private String userName;
     private String password;

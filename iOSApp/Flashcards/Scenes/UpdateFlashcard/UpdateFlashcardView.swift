@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct AddFlashcardView: View {
-    @ObservedObject var viewModel = AddFlashcardViewModel()
+struct UpdateFlashcardView: View {
+    @ObservedObject var viewModel: UpdateFlashcardViewModel
     
     var body: some View {
         Form {
@@ -21,10 +21,17 @@ struct AddFlashcardView: View {
                 }
             }
         }.navigationBarTitle("New flashcard")
+            .onAppear(perform: {
+                self.viewModel.load()
+            })
          .alert(isPresented: $viewModel.presentingAlert) { () -> Alert in
             Alert(title: Text("Message"),
                   message: Text(viewModel.alertMessage),
                   dismissButton: .default(Text("ok")))
          }
+    }
+    
+    init(flashcardId: Int) {
+        viewModel = UpdateFlashcardViewModel(flashcardId: flashcardId)
     }
 }

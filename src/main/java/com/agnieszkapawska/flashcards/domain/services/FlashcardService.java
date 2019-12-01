@@ -18,7 +18,7 @@ public class FlashcardService {
 
     public Flashcard findById(Long id) throws EntityNotFoundException {
         return flashcardRepository.findById(id).orElseThrow(
-                () -> new EntityCouldNotBeFoundException("Flash card by id: " + id + " can't be found"));
+                () -> new EntityCouldNotBeFoundException("Flash card with id: " + id + " can't be found"));
     }
 
     public List<Flashcard> findAll() {
