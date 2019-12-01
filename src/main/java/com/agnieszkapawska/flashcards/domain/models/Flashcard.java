@@ -28,6 +28,9 @@ public class Flashcard {
     )
     @JsonManagedReference
     private Set<QuestionTag> questionTagsSet = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Flashcard(String question, String answer) {
         this.question = question;
@@ -54,7 +57,7 @@ public class Flashcard {
                 ", answer='" + answer + '\'' +
                 ", exampleUsage='" + exampleUsage + '\'' +
                 ", explanation='" + explanation + '\'' +
-                ", questionTagsSet=" + questionTagsNameSet.toString() +
+                ", tagsSet=" + questionTagsNameSet.toString() +
                 '}';
     }
 

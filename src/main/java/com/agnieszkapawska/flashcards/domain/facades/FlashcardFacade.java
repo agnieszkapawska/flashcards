@@ -6,8 +6,10 @@ import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveResponseDto;
 import com.agnieszkapawska.flashcards.domain.exceptions.EntityNotCreatedException;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
+import com.agnieszkapawska.flashcards.domain.models.User;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
 import com.agnieszkapawska.flashcards.domain.services.QuestionTagService;
+import com.agnieszkapawska.flashcards.domain.services.authorization.UserService;
 import com.agnieszkapawska.flashcards.domain.utils.CompareQuestionTagsSets;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -19,10 +21,17 @@ import java.util.stream.Collectors;
 public class FlashcardFacade {
     private FlashcardService flashcardService;
     private QuestionTagService questionTagService;
+    private UserService userService;
     private ModelMapper modelMapper;
 
     public FlashcardSaveResponseDto saveFlashcard(FlashcardSaveDto flashcardSaveDto) {
         Flashcard flashcard = modelMapper.map(flashcardSaveDto, Flashcard.class);
+        if(flashcardSaveDto.getUserId() != null) {
+            User user = userService.findById(flashcardSaveDto.getUserId());
+            flashcard.setUser(user);
+        } else {
+            throw new EntityNotCreatedException("User id can't be empty ");
+        }
         try {
             Flashcard savedFlashcard = flashcardService.saveFlashcard(flashcard);
             Set<QuestionTag> questionTagsSet = questionTagService.getQuestionTagsSet(flashcardSaveDto.getTagsSet());

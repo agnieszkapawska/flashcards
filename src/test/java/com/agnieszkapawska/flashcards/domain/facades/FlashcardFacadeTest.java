@@ -6,8 +6,10 @@ import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveDto;
 import com.agnieszkapawska.flashcards.domain.dtos.FlashcardSaveResponseDto;
 import com.agnieszkapawska.flashcards.domain.models.Flashcard;
 import com.agnieszkapawska.flashcards.domain.models.QuestionTag;
+import com.agnieszkapawska.flashcards.domain.models.User;
 import com.agnieszkapawska.flashcards.domain.services.FlashcardService;
 import com.agnieszkapawska.flashcards.domain.services.QuestionTagService;
+import com.agnieszkapawska.flashcards.domain.services.authorization.UserService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +26,8 @@ public class FlashcardFacadeTest extends FlashcardsApplicationAbstractTests {
     private FlashcardService flashcardService;
     @MockBean
     private QuestionTagService questionTagService;
+    @MockBean
+    private UserService userService;
     private Flashcard flashcard;
 
     @Before
@@ -46,9 +50,14 @@ public class FlashcardFacadeTest extends FlashcardsApplicationAbstractTests {
         FlashcardSaveDto flashcardSaveDto = new FlashcardSaveDto();
         flashcardSaveDto.setTagsSet(new HashSet<>(Arrays.asList("home", "holiday")));
 
+        flashcardSaveDto.setUserId(1L);
+        when(userService.findById(anyLong()))
+                .thenReturn(new User(1L ));
+
         Set<QuestionTag> questionTagSet = new HashSet<>(Arrays.asList(HelpersFactory.createQuestionTag(1L, "home"),
                 HelpersFactory.createQuestionTag(2L, "holiday")));
         List<QuestionTag> questionTagList = new ArrayList<>(questionTagSet);
+
 
         when(flashcardService.saveFlashcard(any(Flashcard.class)))
                 .thenReturn(flashcard);

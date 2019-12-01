@@ -15,4 +15,5 @@ public class FlashcardSaveDto {
     private String exampleUsage;
     private String explanation;
     private Set<String> tagsSet;
+    private Long userId;
 }
